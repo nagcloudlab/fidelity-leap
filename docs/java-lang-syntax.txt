@@ -1,0 +1,167 @@
+
+
+--------------------------------------
+1. Project
+--------------------------------------
+
+project-1
+--------
+|
+|-- package-1  ( .java files / .class files )
+|
+|
+|-- package-2
+| |
+| |--package-2-1 
+| | 
+
+
+
+--------------------------------------
+2. Java File 
+--------------------------------------
+
+-----------------
+PublicDataType.java
+-----------------
+|// package declaration ( optional ) ( 0 .. 1 )
+|// import statements ( optional ) ( 0 .. N )
+|// public Data Type ( interface | class | enum | annotation | record ) ( Must ) ( 1 )
+|// default Data Types ( interface | class | enum | annotation | record ) ( optional ) ( 0 .. N )
+-----------------
+
+
+--------------------------------------
+3. package declaration
+--------------------------------------
+
+why do we need package declaration?
+- to avoid name conflicts
+- to control access
+- to make searching/locating and usage of classes, interfaces, enumerations, and annotations easier
+
+syntax:
+-----------------
+package package-name;
+-----------------
+
+recommended package naming convention:
+
+package domain.companyname.projectname.module.submodule;
+e.g., package com.fidelity.bank.loan.processing;
+
+
+--------------------------------------
+4. import statements
+--------------------------------------
+
+project-1
+|
+| --- package-1 ( A.java , B.java , C.java )
+|
+| --- package-2 ( D.java , E.java , F.java )
+|    --- package-2-1 ( G.java , H.java , I.java )
+
+package-1/A.java
+-----------------
+package package-1;
+
+import package-2.D;
+// or
+import package-2.*;
+
+public class A {
+    // code
+    B b = new B();
+    C c = new C();
+    D d = new D();  // compilation error
+}
+
+
+------------------------------------------------
+Object's theory
+------------------------------------------------
+
+what is a Class?
+-----------------
+-> blueprint|template|prototype for creating objects
+
+class => object
+
+what is an Object?
+-----------------
+
+-> data|info|attributes|properties -> state
+-> functions|methods|              -> behavior
+-> identity
+
+sbi => object
+
+object's concepts
+--------------------------
+
+1. front-end | interface | abstraction
+2. back-end | implementation | encapsulation
+3. inheritance | is-a | reusability
+4. polymorphism | many-forms | method-overloading | method-overriding 
+
+
+object 's principles
+--------------------------
+
+1. Single Responsibility Principle (SRP)
+2. Open/Closed Principle (OCP)
+3. Liskov Substitution Principle (LSP)
+4. Interface Segregation Principle (ISP)
+5. Dependency Inversion Principle (DIP)
+
+object's design patterns
+--------------------------
+
+-> Creational Design Patterns
+-> Structural Design Patterns
+-> Behavioral Design Patterns
+
+reference: refactoring.guru
+------------------------------------------------
+
+
+--------------------------------------
+5. DataType : Interface
+--------------------------------------
+
+why do we need Interface?
+- to achieve abstraction
+
+
+interface syntax:
+-----------------   
+
+[ access-modifier ] interface Interface-Name [ extends Super-Interface-1, Super-Interface-2, ... ] {
+    // constant declarations
+    // abstract method declarations
+    // from Java 8 onwards:
+    // default method declarations
+    // static method declarations
+    // from Java 9 onwards:
+    // private method declarations
+}
+-----------------
+
+--------------------------------------
+6. DataType : Class
+--------------------------------------
+
+why do we need Class?
+- to achieve encapsulation  
+
+class syntax:
+-----------------
+
+__________ _________ class Class-Name [ extends Super-Class ] 
+[public   ] [abstract]                 [ implements Interface-1, Interface-2, ... ] {
+[         ] [final   ]    // field declarations
+                          // constructor declarations
+                          // method declarations
+                          // nested data-type declarations
+}

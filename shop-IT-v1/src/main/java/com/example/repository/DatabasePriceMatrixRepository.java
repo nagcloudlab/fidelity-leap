@@ -6,12 +6,12 @@ import org.slf4j.Logger;
  * author: team-1
  */
 
-public class ExcelPriceMatrixRepository {
+public class DatabasePriceMatrixRepository implements PriceMatrixRepository {
 
     private static Logger logger = org.slf4j.LoggerFactory.getLogger("shop-IT");
 
-    public ExcelPriceMatrixRepository(){
-        logger.info("ExcelPriceMatrixRepository component initialized.");
+    public DatabasePriceMatrixRepository(){
+        logger.info("DatabasePriceMatrixRepository component initialized.");
     }
 
     public double getPrice(String itemCode) {
