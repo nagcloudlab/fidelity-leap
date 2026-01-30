@@ -1,0 +1,110 @@
+
+
+
+style of programming
+-------------------------
+
+
+1. imperative programming
+
+    -> solving problems by giving step by step instructions to the computer
+      on how to achieve a certain task.
+
+      intention & implementation mixed together
+
+2. declarative  programming
+
+    -> solving problems by specifying what the desired outcome is,
+      without explicitly stating how to achieve it.
+
+      intention & implementation separated
+
+      how to do declarative programming in java?
+      => by primitive | object params
+
+
+-----------------------------------------------------------
+
+data-structure(s)
+-------------------------
+
+-> memory-layout of data to do CRUDSS operations ( Algithems ) efficiently
+
+    C  R  U  D  S  S
+    ---------------
+    Create
+    Read
+    Update
+    Delete
+    Search
+    Sort
+
+ -----------------------------------------------------------
+
+
+
+
+collection(s) aka data-structure(s)
+------------------------------------
+
+collection-framework
+--------------------
+
+decision-tree to choose collection
+------------------------------------
+
+1. List
+    - index based
+    - ordered
+    - allows duplicates
+2. Set
+    - no index
+    - unordered
+    - no duplicates
+3. Map
+    - user-indefined key-value pairs
+
+-------------------------------------
+
+top-level: interfaces ( abstraction )
+mid-level: abstract-classes ( partial-implementation )
+bottom-level: classes aka implementations
+
+-------------------------------------
+top-level interfaces
+-------------------------
+
+1. Collection extends Iterable
+    - List
+    - Set
+2. Map
+
+
+-------------------------------------
+implementations
+-------------------------------------
+
+1.List
+    - Vector ( dynamic-array, synchronized ( thread-safe ) ) - legacy
+    - ArrayList ( dynamic-array, non-synchronized ( not thread-safe ) )
+    - LinkedList ( doubly-linked-list )
+2.Set
+    - HashSet ( hash-table based, unordered )
+    - LinkedHashSet ( hash-table + linked-list based, insertion-ordered )
+    - TreeSet ( red-black-tree based, sorted-order )
+3.Map
+    - HashMap ( hash-table based, unordered )
+    - LinkedHashMap ( hash-table + linked-list based, insertion-ordered )
+    - TreeMap ( red-black-tree based, sorted-order )
+4. Others
+     - Stack extends Vector - legacy - LIFO
+     - Queue ( interface )
+         - LinkedList implements Queue - FIFO
+         - PriorityQueue implements Queue - priority-based-order
+     - Deque ( interface ) - double-ended-queue
+         - ArrayDeque implements Deque - dynamic-array based
+         - LinkedList implements Deque - doubly-linked-list based
+
+
+
+

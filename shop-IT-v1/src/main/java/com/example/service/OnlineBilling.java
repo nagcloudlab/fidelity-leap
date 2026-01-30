@@ -88,7 +88,7 @@ public class OnlineBilling {
     public double getTotalPrice(List<String> cart) {
         logger.info("Calculating total price for cart: " + cart);
 //        ExcelPriceMatrixRepository priceMatrixRepository=new ExcelPriceMatrixRepository(); // Don't create
-        // PriceMatrixRepository priceMatrixRepository= PriceMatrixRepositoryFactory.getPriceMatrixRepository("DB"); // Use Factory
+//         PriceMatrixRepository priceMatrixRepository= PriceMatrixRepositoryFactory.getPriceMatrixRepository("DB"); // Use Factory
         double totalPrice = 0.0;
         for (String itemCode : cart) {
             double price = priceMatrixRepository.getPrice(itemCode);

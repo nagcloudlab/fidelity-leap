@@ -1,5 +1,5 @@
 package com.example.repository;
 
-private interface PriceMatrixRepository {
+public interface PriceMatrixRepository {
     double getPrice(String itemCode);
 }

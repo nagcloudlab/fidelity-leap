@@ -165,3 +165,156 @@ __________ _________ class Class-Name [ extends Super-Class ]
                           // method declarations
                           // nested data-type declarations
 }
+
+
+--------------------------------------
+7. DataType : Enum
+--------------------------------------
+
+why do we need Enum?
+- to represent a group of named constant values
+
+e.g : days of week, months of year, directions, colors, etc.
+
+
+enum syntax:
+-----------------
+[ access-modifier ] enum Enum-Name {
+    // enum constant declarations
+    // field declarations
+    // constructor declarations
+    // method declarations
+}
+
+-----------------
+--------------------------------------
+8. DataType : Annotation
+--------------------------------------
+
+why do we need Annotation?
+- to provide metadata about the program to the compiler and runtime environment or tools or frameworks
+
+annotation syntax:
+-----------------
+[ access-modifier ] @interface Annotation-Name {
+    // element declarations
+}
+-----------------
+
+--------------------------------------
+9. DataType : Record
+--------------------------------------  
+why do we need Record?
+- to represent a simple data carrier class with immutable data  
+record syntax:
+-----------------
+[ access-modifier ] record Record-Name ( Component-Type-1 Component-Name-1, 
+                                       Component-Type-2 Component-Name-2, 
+                                       ... ) {
+    // field declarations
+    // constructor declarations
+    // method declarations
+    // nested data-type declarations
+}
+-----------------
+
+--------------------------------------
+10. variables
+--------------------------------------
+
+data-type(s)
+
+    - values | primitives | simple data types ( 8 types )
+        byte, short, int, long, float, double, char, boolean
+    - object | reference | complex data types ( user-defined data types )
+        class, interface, enum, annotation, record  
+
+-------------------
+
+class Employee{
+    // static / class variable
+    static String tnrName;
+    // instance / object variable
+    int id;
+    String name; 
+    void work(){
+        // local variable
+        String task;
+    }
+}
+
+variable syntax:
+-----------------
+
+    ___________ ___________ data-type variable-name = value | object's reference;
+    [private]   [static    ]
+    [       ]   [final     ]
+    [protected] [transient ]
+    [public ]   [volatile  ]
+
+    local variable syntax:
+    -----------------
+    Nil           [final ]
+
+
+------------------------------------------------------
+11. constructor
+------------------------------------------------------   
+
+in java, object creation is a two-step process:
+1. memory allocation => 'new' keyword
+2. initialization => constructor
+
+obj=new Constructor();
+
+constructor syntax:
+-----------------
+    [ access-modifier ] Class-Name ( [ parameter-list ] ) {
+        // initialization code
+    }
+-----------------
+
+------------------------------------------------------
+12. methods
+------------------------------------------------------
+
+why do we need methods?
+- to achieve code reusability
+
+
+class FoodFactory{
+     String getFood(String foodType){
+        if(foodType.equals("Veg")){
+            return new VegFood();
+        }else if(foodType.equals("Non-Veg")){
+            return new NonVegFood();
+        }else{
+            return null;
+        }
+    }
+}
+
+method syntax:
+-----------------
+
+___________ _______________ ReturnType method-name([parameter-list]) [throws Exception-1, Exception-2, ... ] {
+            [static]             // A,R,L and assignments
+            [final]              // conditional statements
+            [synchronized]       // loops
+            [abstract]           // method calls
+            [native]            [return] value | object's reference;
+                                [throw Exception-Object;]
+            }
+
+------------------------------------------------------
+13. Naming conventions
+------------------------------------------------------
+
+-> keywords : lowercase
+-> packages : lowercase ( domain.companyname.projectname.module.submodule )
+-> classes/interfaces/enums/annotations/records : PascalCase e.g ., EmployeeDetails
+-> methods/variables : camelCase e.g., calculateSalary , empName
+-> constants : UPPERCASE_WITH_UNDERSCORES e.g., MAX_VALUE
+
+------------------------------------------------------
+
