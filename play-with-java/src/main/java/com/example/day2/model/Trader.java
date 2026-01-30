@@ -17,6 +17,10 @@ public class Trader {
         return city;
     }
 
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     @Override
     public String toString() {
         return "Trader{" +
