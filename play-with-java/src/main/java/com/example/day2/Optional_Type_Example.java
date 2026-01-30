@@ -14,11 +14,11 @@ class Insurance {
     }
 }
 
-class Car {
+class Carr {
     String model;
     Optional<Insurance> insurance = Optional.empty();
 
-    Car(String model) {
+    Carr(String model) {
         this.model = model;
     }
 
@@ -33,17 +33,17 @@ class Car {
 
 class Person {
     String name;
-    Optional<Car> car = Optional.empty();
+    Optional<Carr> car = Optional.empty();
 
     Person(String name) {
         this.name = name;
     }
 
-    void setCar(Car car) {
+    void setCar(Carr car) {
         this.car = Optional.ofNullable(car);
     }
 
-    Optional<Car> getCar() {
+    Optional<Carr> getCar() {
         return car;
     }
 }
@@ -53,7 +53,7 @@ public class Optional_Type_Example {
 
         // scenario-1: person has car with insurance
         Insurance insurance1 = new Insurance("ABC Insurance");
-        Car car1 = new Car("Toyota");
+        Carr car1 = new Carr("Toyota");
         car1.setInsurance(insurance1);
         Person person1 = new Person("John");
         person1.setCar(car1);
@@ -61,7 +61,7 @@ public class Optional_Type_Example {
         // get person1's car's insurance name
 
         person1.getCar()
-                .flatMap(Car::getInsurance)
+                .flatMap(Carr::getInsurance)
                 .map(Insurance::getName)
                 .ifPresentOrElse(
                         name -> System.out.println("Person1's car insurance name: " + name),
@@ -79,7 +79,7 @@ public class Optional_Type_Example {
         Person person2 = new Person("Alice");
 
         person2.getCar()
-                .flatMap(Car::getInsurance)
+                .flatMap(Carr::getInsurance)
                 .map(Insurance::getName)
                 .ifPresentOrElse(
                         name -> System.out.println("Person2's car insurance name: " + name),
