@@ -51,7 +51,7 @@ public class Dish {
                 new Dish("rice", true, 350, Type.OTHER),
                 new Dish("season fruit", true, 120, Type.OTHER),
                 new Dish("pizza", true, 550, Type.OTHER),
-                new Dish("prawns", false, 300, Type.FISH),
+                new Dish("prawns", false, 600, Type.FISH),
                 new Dish("salmon", false, 450, Type.FISH)
         );
     }
