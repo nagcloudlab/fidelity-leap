@@ -107,4 +107,23 @@ implementations
 
 
 
+-----------------------------------
+
+ - process vs thread
+
+ process
+    ---------------
+        -> each has its own memory-space
+        -> independent execution
+        -> inter-process-communication ( IPC ) is expensive
+    ---------------
+ thread
+    ---------------
+        -> shares memory-space with other threads of the same process
+        -> lightweight
+        -> inter-thread-communication is cheap
+    ---------------
+
+
+
 
