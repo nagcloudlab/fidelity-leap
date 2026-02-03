@@ -8,12 +8,14 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @ComponentScan(basePackages = "com.example")
 @Import({
         DataSourceConfiguration.class
 })
+@EnableTransactionManagement
 public class Application {
 
     private static final Logger logger = org.slf4j.LoggerFactory.getLogger("todos-service");
@@ -36,7 +38,7 @@ public class Application {
         // Run phase
         //-----------------------------------------
         TodoService todoService = applicationContext.getBean("todoService", TodoService.class);
-        todoService.createTodo("todo-2", "My second todo");
+        todoService.createTodo("todo-3", "My third todo");
 
 
         logger.info("-".repeat(50));

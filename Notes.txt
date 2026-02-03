@@ -1,0 +1,23 @@
+
+
+
+java + sql databases
+-------------------
+
+    -> JDBC ( Java Database Connectivity )
+        -> low-level api for connecting to relational databases from Java applications
+
+    -> JPA ( Java Persistence  API ) ( wrapper over JDBC )
+       application     <---->   SQL database
+       object          <----->  relation
+
+       ORM spec ( JPA )
+            -> Hibernate  ( Jboss community )
+
+
+    what spring F.W offers while working SQL databases
+
+        -> resource ( connection ) management
+        -> exception management
+        -> Transaction management  ( ACID )
+

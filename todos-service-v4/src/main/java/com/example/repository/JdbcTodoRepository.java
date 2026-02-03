@@ -3,6 +3,7 @@ package com.example.repository;
 import com.example.entity.Todo;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -10,15 +11,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-@Component("todoRepository")
+@Component("jdbcTodoRepository")
 public class JdbcTodoRepository implements TodoRepository {
 
     private static final Logger logger = org.slf4j.LoggerFactory.getLogger("todos-service");
-    private final DataSource dataSource;
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public JdbcTodoRepository(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public JdbcTodoRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
         logger.info("JdbcTodoRepository initialized");
     }
 
@@ -27,17 +28,8 @@ public class JdbcTodoRepository implements TodoRepository {
     public void save(Todo todo) {
         logger.info("Saving Todo: {}", todo);
         // Implementation for saving a Todo item to the database
-        try (Connection connection = dataSource.getConnection();) {
-            String sql = "INSERT INTO todos (title,description) VALUES (?,?)";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, todo.getTitle());
-            ps.setString(2, todo.getDescription());
-            ps.executeUpdate();
-            ps.close();
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        String sql = "INSERT INTO todos (title,description) VALUES (?,?)";
+        jdbcTemplate.update(sql, todo.getTitle(), todo.getDescription());
     }
 
     @Override

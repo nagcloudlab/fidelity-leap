@@ -4,7 +4,9 @@ import com.example.entity.Todo;
 import com.example.repository.TodoRepository;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component("todoService")
 public class TodoServiceImpl implements TodoService {
@@ -13,13 +15,14 @@ public class TodoServiceImpl implements TodoService {
     private final TodoRepository todoRepository ;
 
     @Autowired
-    public TodoServiceImpl(TodoRepository todoRepository){
+    public TodoServiceImpl(@Qualifier("jpaTodoRepository") TodoRepository todoRepository){
         this.todoRepository= todoRepository;
         logger.info("TodoRepository injected into TodoServiceImpl");
         logger.info("TodoServiceImpl initialized");
     }
 
     @Override
+    @Transactional
     public void createTodo(String title, String description) {
         logger.info("Creating Todo with title: {} and description: {}", title, description);
         Todo todo = new Todo();
