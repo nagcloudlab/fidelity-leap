@@ -126,4 +126,60 @@ implementations
 
 
 
+-------------------------------------------
+java 1.5 new features
+-------------------------------------------
+
+1. generics
+    -> type-safety at compile-time
+2. enhanced-for-loop
+    -> simplified iteration over collections and arrays
+3. autoboxing and unboxing
+    -> automatic conversion between primitive types and their corresponding wrapper classes
+4. varargs
+    -> method parameter that accepts variable number of arguments
+5. static-import
+    -> import static members of a class so that they can be used without class qualification
+6. concurrency utilities
+    -> high-level concurrency constructs in java.util.concurrent package
+7. annotations
+    -> metadata to provide information about the program
+8. enum types
+    -> special data type to define a set of named constants
+9. java.util.concurrent package
+    -> high-level concurrency utilities for multi-threaded programming
+
+
+java 1.8 -> 8
+-------------------------------------------
+
+1. lambda expressions
+    -> enable functional programming by allowing functions to be treated as first-class citizens
+2. functional interfaces
+    -> interfaces with a single abstract method, used as the target for lambda expressions
+3. method references
+    -> shorthand notation of a lambda expression to call a method
+4. default methods in interfaces
+    -> allow interfaces to have method implementations
+5. streams API
+    -> facilitate functional-style operations on collections of objects
+6. java.time package
+    -> new date and time API for better handling of date and time operations
+7. optional class
+    -> container object which may or may not contain a non-null value
+8. repeating annotations
+    -> allow the same annotation to be applied multiple times to a single element
+9. type annotations
+
+
+java 17
+-------------------------------------------
+
+1. sealed classes and interfaces
+    -> restrict which other classes or interfaces can extend or implement them
+2. pattern matching for instanceof
+    -> simplifies type checks and casts
+3. records
+
+
 
