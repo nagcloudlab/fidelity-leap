@@ -1,5 +1,8 @@
 package com.example;
 
+import com.example.repository.JdbcTodoRepository;
+import com.example.repository.TodoRepository;
+import com.example.service.TodoService;
 import com.example.service.TodoServiceImpl;
 import org.slf4j.Logger;
 
@@ -15,7 +18,8 @@ public class Application {
         //-----------------------------------------
         logger.info("-".repeat(50));
         // based on configuration, initialize services, databases, etc.
-        TodoServiceImpl todoService = new TodoServiceImpl();
+        TodoRepository todoRepository = new JdbcTodoRepository();
+        TodoService todoService = new TodoServiceImpl(todoRepository);
 
 
         logger.info("-".repeat(50));
