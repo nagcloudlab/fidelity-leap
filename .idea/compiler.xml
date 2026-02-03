@@ -9,6 +9,7 @@
         <module name="shop-it-v1" />
         <module name="play-with-java" />
         <module name="todos-service-v2" />
+        <module name="todos-service-v3 (1)" />
         <module name="todos-service-v3" />
         <module name="todos-service" />
       </profile>
