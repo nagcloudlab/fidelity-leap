@@ -11,30 +11,29 @@
 <div class="display-1">Todos Management</div>
 <hr/>
 
-<a class="btn btn-primary" href="/todos">todos</a>
+<a class="btn btn-primary" href="/todos">List Todos</a>
+|
+<a class="btn btn-primary" href="/new-todo">New Todo</a>
 
 <hr/>
 <div> All Todos </div>
 <hr/>
 
-<!--using thymeleaf to iterate over todos-->
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Completed</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="todo : ${todos}">
-        <td th:text="${todo.id}">1</td>
-        <td th:text="${todo.title}">Sample Title</td>
-        <td th:text="${todo.completed}">false</td>
-    </tr>
-    </tbody>
-</table>
-
+<div class="row">
+    <div class="col-6">
+        <form action="/todos" method="post">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title" name="title" />
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea type="text" class="form-control" id="description" name="description" ></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Todo</button>
+        </form>
+    </div>
+</div>
 
 </body>
 </html>

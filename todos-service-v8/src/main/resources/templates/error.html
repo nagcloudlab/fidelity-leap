@@ -15,5 +15,14 @@
 |
 <a class="btn btn-primary" href="/new-todo">New Todo</a>
 
+<hr/>
+
+<div class="alert aler-danger">
+    <h1 class="display-4">An error occurred</h1>
+    <p th:text="${errorMessage}">Error message goes here</p>
+</div>
+
+go back to <a href="/todos">Todo List</a>
+
 </body>
 </html>
