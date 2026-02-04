@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service("todoService")
@@ -34,7 +35,8 @@ public class TodoServiceImpl implements TodoService {
             rollbackFor = {RuntimeException.class},
             noRollbackFor = {UserNotFoundException.class},
             timeout = 10,
-            isolation = Isolation.READ_COMMITTED
+            isolation = Isolation.READ_COMMITTED,
+            propagation = Propagation.REQUIRES_NEW
     )
     public void createTodo(CreateTodoDto createTodoDto) {
         logger.info("Creating Todo with title: {}", createTodoDto.getTitle());
