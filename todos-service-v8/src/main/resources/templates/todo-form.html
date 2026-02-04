@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>todos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body class="container">
+
+<div class="display-1">Todos Management</div>
+<hr/>
+
+<a class="btn btn-primary" href="/todos">todos</a>
+
+<hr/>
+<div> All Todos </div>
+<hr/>
+
+<!--using thymeleaf to iterate over todos-->
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Completed</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="todo : ${todos}">
+        <td th:text="${todo.id}">1</td>
+        <td th:text="${todo.title}">Sample Title</td>
+        <td th:text="${todo.completed}">false</td>
+    </tr>
+    </tbody>
+</table>
+
+
+</body>
+</html>
