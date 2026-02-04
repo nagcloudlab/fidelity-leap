@@ -6,4 +6,8 @@ spring:
     password: root
 
 
+    jpa:
+        hibernate:
+            ddl-auto: create
+
 debug: true

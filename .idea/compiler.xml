@@ -7,19 +7,25 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="play-with-java" />
-        <module name="todos-service-v5 (1)" />
-        <module name="todos-service-v2" />
-        <module name="todos-service-v3" />
-        <module name="todos-service-v5" />
-        <module name="shop-it-v1" />
-        <module name="todos-service-v3 (1)" />
-        <module name="todos-service" />
+        <module name="spring-AOP" />
+        <module name="design-patterns" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="play-with-java" target="17" />
+      <module name="shop-it-v1" target="17" />
+      <module name="todos-service" target="17" />
+      <module name="todos-service-v1" target="17" />
+      <module name="todos-service-v2" target="17" />
+      <module name="todos-service-v3" target="17" />
+      <module name="todos-service-v3 (1)" target="17" />
+      <module name="todos-service-v5" target="17" />
+      <module name="todos-service-v5 (1)" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="spring-AOP" options="-parameters" />
       <module name="todos-service-v5" options="-parameters" />
       <module name="todos-service-v5 (1)" options="-parameters" />
     </option>

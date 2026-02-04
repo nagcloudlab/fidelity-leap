@@ -21,3 +21,6 @@ java + sql databases
         -> exception management
         -> Transaction management  ( ACID )
 
+
+--------------------------------------
+

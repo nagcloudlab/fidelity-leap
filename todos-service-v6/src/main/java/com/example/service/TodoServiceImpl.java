@@ -7,9 +7,10 @@ import org.slf4j.Logger;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Component("todoService")
+@Service("todoService")
 public class TodoServiceImpl implements TodoService {
 
     private static final Logger logger = org.slf4j.LoggerFactory.getLogger("todos-service");
