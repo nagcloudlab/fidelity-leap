@@ -1,13 +1,15 @@
-package com.example.error;
+package com.example.execption;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class HttpError {
+@Data
+public class HttpErrorInfo {
     private String path;
     private  int statusCode;
     private  String message;

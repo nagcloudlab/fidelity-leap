@@ -1,19 +1,16 @@
 package com.example.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TodoDto {
-
-    private Integer id;
+@Setter
+@Getter
+public class CreateTodoDto {
     private String title;
     private String description;
-    private boolean completed;
-    private Integer userId;
-
-
+    private long userId;
 }

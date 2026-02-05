@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>todos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body class="container">
+
+<div class="display-1">Todos Management</div>
+<hr/>
+
+<a class="btn btn-primary" href="/todos">List Todos</a>
+|
+<a class="btn btn-primary" href="/new-todo">New Todo</a>
+
+<hr/>
+
+<div class="alert aler-danger">
+    <h1 class="display-4">An error occurred</h1>
+    <p th:text="${errorMessage}">Error message goes here</p>
+</div>
+
+go back to <a href="/todos">Todo List</a>
+
+</body>
+</html>
