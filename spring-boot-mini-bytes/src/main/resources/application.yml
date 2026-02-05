@@ -1,0 +1,28 @@
+
+
+fidelity:
+  transfer:
+    limit: 10000
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: foo
+
+fidelity:
+  transfer:
+    limit: 20000
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: bar
+
+fidelity:
+  transfer:
+    limit: 30000
+  city: Chennai
