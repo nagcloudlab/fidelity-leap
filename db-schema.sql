@@ -16,6 +16,7 @@ create table todos (
 );
 
 
+
 create table users (
     id int auto_increment primary key,
     username varchar(100) not null unique,
@@ -24,6 +25,20 @@ create table users (
     created_at timestamp default current_timestamp,
     todos_count int default 0
 );
+create table roles(
+    id int auto_increment primary key,
+    name varchar(50) not null
+);
+
+insert into roles (name) values ('ADMIN'), ('MANAGER'), ('USER');
+
+create table user_roles(
+    user_id int not null,
+    role_id int not null,
+    primary key (user_id, role_id),
+    foreign key (user_id) references users(id),
+    foreign key (role_id) references roles(id)
+)
 
 -- drop password column from users;
 alter table users drop column password;

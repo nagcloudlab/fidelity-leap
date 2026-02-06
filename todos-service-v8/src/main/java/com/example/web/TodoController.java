@@ -6,6 +6,8 @@ import com.example.entity.Todo;
 import com.example.execption.UserNotFoundException;
 import com.example.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +23,6 @@ public class TodoController {
 
     @GetMapping("/new-todo")
     public ModelAndView newTodoForm() {
-        // Authorization logic can be added here if needed
         ModelAndView mav = new ModelAndView();
         mav.setViewName("todo-form");
         return mav;
@@ -29,6 +30,14 @@ public class TodoController {
 
     @GetMapping("/todos")
     public ModelAndView listTodos() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("-".repeat(50));
+        System.out.println("Authenticated User: " + authentication.getName());
+        authentication.getAuthorities().forEach(grantedAuthority -> {
+            System.out.println("Authority: " + grantedAuthority.getAuthority());
+        });
+        System.out.println("-".repeat(50));
+
         List<Todo> todos = todoService.listTodos(); // Model Data
         ModelAndView mav = new ModelAndView();
         mav.addObject("todos", todos); // Add Model Data to ModelAndView
@@ -38,7 +47,6 @@ public class TodoController {
 
     @PostMapping("/todos")
     public String createTodo(@ModelAttribute CreateTodoDto createTodoDto) {
-        createTodoDto.setUserId(2L);
         todoService.createTodo(createTodoDto);
         return "redirect:/todos";
     }

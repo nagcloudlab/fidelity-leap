@@ -2,14 +2,14 @@ package com.example;
 
 import java.util.List;
 
-public class User {
+public class FidelityUser {
 
     private final String username;
     private final String password;
     private final String domain;
     private final List<String> roles;
 
-    public User(String username, String password, String domain, List<String> roles) {
+    public FidelityUser(String username, String password, String domain, List<String> roles) {
         this.username = username;
         this.password = password;
         this.domain = domain;

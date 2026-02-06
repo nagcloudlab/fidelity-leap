@@ -15,4 +15,7 @@ public interface TodoRepository extends JpaRepository<Todo, Long> {
     // Method DSL
     List<Todo> findByCompleted(boolean completed);
 
+    @Query("from Todo t where t.user.id = ?1")
+    List<Todo> findAllByUserId(Long userId);
+
 }

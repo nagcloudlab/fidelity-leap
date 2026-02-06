@@ -12,5 +12,4 @@ import lombok.Setter;
 public class CreateTodoDto {
     private String title;
     private String description;
-    private long userId;
 }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class AuthenticationProvider implements org.springframework.security.authentication.AuthenticationProvider {
+public class FidelityAuthenticationProvider implements org.springframework.security.authentication.AuthenticationProvider {
 
     @Autowired
     private InMemoryUserStore userStore;
@@ -23,7 +23,7 @@ public class AuthenticationProvider implements org.springframework.security.auth
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         FidelityAuthenticationToken token = (FidelityAuthenticationToken) authentication;
 
-        User user = userStore.find(token.getName())
+        FidelityUser user = userStore.find(token.getName())
                 .orElseThrow(() -> new BadCredentialsException("User not found"));
 
         if (!passwordEncoder.matches(token.getCredentials().toString(), user.getPassword())

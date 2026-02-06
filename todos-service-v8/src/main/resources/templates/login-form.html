@@ -11,17 +11,18 @@
 <div class="display-1">Todos Management</div>
 <hr/>
 
-<a class="btn btn-primary" href="/todos">List Todos</a>
-|
-<a class="btn btn-primary" href="/new-todo">New Todo</a>
 
 <hr/>
-<div> Register </div>
-<hr/>
+<div> Login </div>
 
 <div class="row">
+
     <div class="col-6">
-        <form action="/register" method="post">
+        <span th:if="${loginError}" class="text-danger">
+            Invalid username and password.
+        </span>
+        <hr/>
+        <form action="/authenticate" method="post">
             <div class="mb-3">
                 <label for="title" class="form-label">Username</label>
                 <input type="text" class="form-control" id="title" name="username" />
@@ -30,12 +31,13 @@
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" id="password" name="password" />
             </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="text" class="form-control" id="email" name="email" />
-            </div>
-            <button type="submit" class="btn btn-primary">Register</button>
+            <button type="submit" class="btn btn-primary">Login</button>
         </form>
+        <hr/>
+        <div>
+            <span>New user? </span>
+            <a href="/register">Register here</a>
+        </div>
     </div>
 </div>
 

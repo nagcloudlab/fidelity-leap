@@ -9,6 +9,7 @@ import com.example.repository.TodoRepository;
 import com.example.repository.UserRepository;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -47,8 +48,13 @@ public class TodoServiceImpl implements TodoService {
         todo.setDescription(createTodoDto.getDescription());
         todo.setTodoType(TodoType.OTHER);
         // db-call - read
-        User user=userRepository.findById(createTodoDto.getUserId())
-                        .orElseThrow(()->new UserNotFoundException("User not found with id: " + createTodoDto.getUserId()));
+
+        Authentication authentication= org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+        String username=authentication.getName();
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new UserNotFoundException("User not found with username: " + username);
+        }
         todo.setUser(user);
         // db-call - write
         todoRepository.save(todo);
@@ -88,7 +94,17 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     public List<Todo> listTodos() {
-        return todoRepository.findAll();
+
+        Authentication authentication= org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+        String username=authentication.getName();
+        User user = userRepository.findByUsername(username);
+        if(user==null){
+            throw new UserNotFoundException("User not found with username: " + username);
+        }
+        logger.info("Listing Todos for user: {}", username);
+        long userId=user.getId();
+
+        return todoRepository.findAllByUserId(userId);
     }
 
 

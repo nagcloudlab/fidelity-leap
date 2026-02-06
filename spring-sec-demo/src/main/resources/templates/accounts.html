@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+</head>
+<body>
+
+Private Page
+<br/>
+
+<!--using thymeleaf , display all accounts from the model attribute "accounts"-->
+
+<ul>
+    <li th:each="account : ${accounts}">
+        <span th:text="${account.accountNumber}">Account Number</span> -
+        <span th:text="${account.accountHolderName}">Account Number</span> -
+        <span th:text="${account.balance}">Account Balance</span>
+    </li>
+</ul>
+
+</body>
+</html>
