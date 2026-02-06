@@ -12,12 +12,9 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -39,11 +36,11 @@ public class UserController {
                 new Role(3)
         );
         user.setRoles(roles);
-        user=userRepository.save(user);
+        User savedUser=userRepository.save(user);
         CreateUserDtoResponse response = new CreateUserDtoResponse();
-        response.setId(user.getId());
-        response.setUsername(user.getUsername());
-        response.setEmail(user.getEmail());
+        response.setId(savedUser.getId());
+        response.setUsername(savedUser.getUsername());
+        response.setEmail(savedUser.getEmail());
         return response;
 
     }
@@ -62,7 +59,7 @@ public class UserController {
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
             );
         }catch (BadCredentialsException e){
-            e.printStackTrace();
+            return ResponseEntity.status(401).body("Invalid username or password");
         }
         String token = jwtUtil.generateToken(request.getUsername());
         return ResponseEntity.ok(new AuthResponse(token));

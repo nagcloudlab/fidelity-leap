@@ -1,0 +1,31 @@
+
+
+
+
+todos management rest api
+-------------------------
+
+1. identify the resources | actions which are to be exposed via REST api
+    - todo
+    - user
+2. define the endpoints ( URL ) for the resources
+    /todos
+    /users
+ 3. find relationship between resources
+    - a user can have multiple todos
+    - a todo belongs to a single user
+4. define the http methods for each endpoint
+    - GET /todos - get all todos
+    - GET /todos/{id} - get a specific todo by id
+    - POST /todos - create a new todo
+    - PUT /todos/{id} - update a specific todo by id
+    - DELETE /todos/{id} - delete a specific todo by id
+    - GET /users - get all users
+    - GET /users/{id} - get a specific user by id
+    - POST /users - create a new user
+    - PUT /users/{id} - update a specific user by id
+    - DELETE /users/{id} - delete a specific user by id
+    - GET /users/{id}/todos - get all todos for a specific user by user id
+5. define the request and response format ( usually json )
+6. implement authentication and authorization ( if needed )
+
