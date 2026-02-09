@@ -1,0 +1,14 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">{{value}} - <small class="badge bg-secondary">{{totalVotes}}</small></h5>
+        <hr />
+        <div class="d-flex justify-content-between">
+            <button class="btn btn-success" (click)="handleVote('like')">
+                <i class="fa fa-thumbs-up"></i>
+            </button>
+            <button class="btn btn-danger" (click)="handleVote('dislike')">
+                <i class="fa fa-thumbs-down"></i>
+            </button>
+        </div>
+    </div>
+</div>

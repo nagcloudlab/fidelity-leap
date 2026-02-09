@@ -108,7 +108,6 @@ Angular core concepts
       syntax: [property]="expression"
   3. event binding ( one-way data binding )      
       syntax: (event)="handler($event)"
-
 2. Directives
 
    1. structural directives ( *ngIf, *ngFor, etc. ) => to change component's structure ( add/remove elements )

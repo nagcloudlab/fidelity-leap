@@ -28,6 +28,12 @@
     },
     {
       "path": "./projects/shop-page-v1/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/thinking-in-angular/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/thinking-in-angular/tsconfig.spec.json"
     }
   ]
 }
