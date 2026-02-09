@@ -27,7 +27,8 @@
                                             href="#">Specification</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a (click)="handleTabChange($event,3)" class="nav-link" href="#">Reviews</a>
+                                        <a (click)="handleTabChange($event,3)"
+                                            [ngClass]="{'nav-link':true,'active': isTabActive(3)}" href="#">Reviews</a>
                                     </li>
                                 </ul>
                                 <div *ngIf="isTabActive(1)">{{product.description}}</div>
