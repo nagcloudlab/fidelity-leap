@@ -1,0 +1,115 @@
+
+
+UI -> data + style + interactvity
+Web UI -> HTML + CSS + JS
+
+why do we need javascript for HTML-pages?
+
+using browser's Api(s), javascript can bring interactivity to HTML pages. 
+
+ browser's Api(s) -> w3c recommended standards -> DOM, XHR/Fetch, etc.
+ Ref: https://developer.mozilla.org/en-US/docs/Web/API
+
+ browse's vendor ( e.g., Google, Microsoft, Apple, etc.) 
+ implemeted these Apis navely ( c++ ) and expose them to JS as global objects (e.g., document, window, etc.)
+ 
+
+using DOM Api
+---------------
+-> to Create/Update/Remove HTML elements
+-> to change CSS styles
+-> to react to user interactions (clicks, form submissions, etc.)
+
+using XHR/Fetch Api
+-------------------
+-> to fetch data from servers asynchronously (without reloading the page)
+
+using setTimeout/setInterval
+-------------------
+-> to execute any action on timeout/interval (e.g., auto-saving, animations, etc.)
+
+
+..
+
+
+problems working browser's Api(s) directly
+---------------------------------
+1. Browser compatibility issues: Different browsers may implement APIs differently, leading to inconsistent behavior across platforms
+   https://caniuse.com/
+2. Verbose and complex code: Working with browser APIs directly can lead to verbose and complex code, especially for common tasks like DOM manipulation and event handling
+3. Performance issues: Directly
+4. Memory leaks: Improper use of browser APIs can lead to memory leaks, especially when dealing with event listeners and DOM manipulation
+5. Security vulnerabilities: Improper use of browser APIs can lead to security vulnerabilities, such as cross-site scripting (XSS) attacks and other forms of injection attacks
+6. Code reusability: Directly working with browser APIs can lead to code that is tightly coupled to specific implementations, making it difficult to reuse code across different projects or platforms
+......
+
+Solution: Using Server-page technologies 
+           -> jsp,thymeleaf, etc. (Java)
+           -> ejs, handlebars, etc. (Node.js)
+           -> Razor (ASP.NET)
+           -> php, etc.
+           -> jinja2 (Python)
+
+Limitations of Server-page technologies
+---------------------------------
+
+-> on every page response, browser needs to reload the entire page, 
+   which can lead to slower performance and a less responsive user experience
+-> server need to maintain the state of the application, which can be complex and error-prone, especially for larger applications   
+-> increase n/w traffic, as the entire page needs to be sent from the server to the client on every request, even if only a small portion of the page has changed
+-> limited interactivity, as server-side rendering can make it difficult to create dynamic and interactive user
+
+
+best solution: using client-side page technologies 
+--------------------------------------------------
+
+-> Jquery
+
+MVC based client-side framework
+------------------------------
+
+-> knockout.js
+-> backbone.js
+-> ember.js
+-> dojo
+-> Ext.js from sencha ( commercial )
+-> AngularJS ( Google )
+....
+
+
+Component-based client-side framework
+------------------------------
+-> React ( Facebook )
+    -> Next.js ( Vercel )
+-> Angular ( Google )
+-> Vue.js ( Evan You )
+-> Svelte ( Rich Harris )
+-> Solid.js ( Ryan Carniato )
+
+
+----------------------------------
+
+
+component => data ( .html ) + style ( .css ) + interactivity ( .ts )
+
+
+---------------------------------
+
+
+Angular core concepts
+-----------------
+
+
+1. Data Binding
+
+ 1. interpolation ( one-way data binding )
+      syntax: {{ expression }}
+  2. property binding ( one-way data binding )
+      syntax: [property]="expression"
+  3. event binding ( one-way data binding )      
+      syntax: (event)="handler($event)"
+
+2. Directives
+
+   1. structural directives ( *ngIf, *ngFor, etc. ) => to change component's structure ( add/remove elements )
+   2. attribute directives ( ngClass, ngStyle, etc. ) => to change component's appearance ( add/remove classes, change styles, etc. )
