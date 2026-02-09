@@ -5,6 +5,18 @@
             <app-navbar title="shop-IT"></app-navbar>
             <hr />
             <app-cart-badge [value]="cart.length"></app-cart-badge>
+            <hr />
+            <button class="btn btn-primary" (click)="toggleCart()">Toggle Cart</button>
+            <hr />
+            <app-cart-view *ngIf="isCartVisible" [cart]="cart">
+                <div class="h">
+                    <h3>Cart</h3>
+                </div>
+                <!-- <div class="f" #cf>
+                    <span style="color: tomato;">content footer</span>
+                </div> -->
+            </app-cart-view>
+            <br />
             <app-product-list (buy)="addToCart($event)"></app-product-list>
         </div>
     </div>

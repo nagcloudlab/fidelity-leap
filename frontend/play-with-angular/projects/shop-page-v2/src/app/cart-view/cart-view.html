@@ -1,0 +1,17 @@
+<div class="card">
+    <div class="card-body">
+        <div class="card-header">
+            <ng-content select=".h"></ng-content>
+        </div>
+        <hr />
+        <p class="card-text" *ngIf="cart.length === 0">Your cart is empty.</p>
+        <ul class="list-group list-group-flush" *ngIf="cart.length > 0">
+            <li class="list-group-item" *ngFor="let item of cart">
+                {{item.name}} - ${{item.price}}
+            </li>
+        </ul>
+    </div>
+    <div #vf class="card-footer">
+        <ng-content select=".f"></ng-content>
+    </div>
+</div>
