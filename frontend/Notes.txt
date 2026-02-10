@@ -112,3 +112,14 @@ Angular core concepts
 
    1. structural directives ( *ngIf, *ngFor, etc. ) => to change component's structure ( add/remove elements )
    2. attribute directives ( ngClass, ngStyle, etc. ) => to change component's appearance ( add/remove classes, change styles, etc. )
+
+
+----------------------------
+
+
+1. component
+2. directives
+3. pipes
+4. services
+
+-----------------------------

@@ -1,0 +1,33 @@
+<div #productItem appHighlight="yellow" class="list-group-item" *ngIf="true">
+    <div class="row">
+        <div class="col-4">
+            <img class="img-fluid" [src]="product.imageUrl" alt="" />
+        </div>
+        <div class="col-8">
+            <!-- <pre>{{product | json}}</pre> -->
+            <div>{{product.name|uppercase}} - <span>{{product.makeDate|date:'yyyy'}}</span> </div>
+            <div>{{product.price | discount:10 | currency:product.currencyCode:false}}</div>
+            <button (click)="addToCart($event)" class="btn btn-primary">Add to Cart</button>
+            <div class="mt-2"></div>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a (click)="handleTabChange($event,1)" [ngClass]="{'nav-link':true,'active': isTabActive(1)}"
+                        class="nav-link" href="#">Description</a>
+                </li>
+                <li class="nav-item">
+                    <a (click)="handleTabChange($event,2)" [ngClass]="{'nav-link':true,'active': isTabActive(2)}"
+                        class="nav-link" href="#">Specification</a>
+                </li>
+                <li class="nav-item">
+                    <a (click)="handleTabChange($event,3)" [ngClass]="{'nav-link':true,'active': isTabActive(3)}"
+                        href="#">Reviews</a>
+                </li>
+            </ul>
+            <div *ngIf="isTabActive(1)">{{product.description}}</div>
+            <div *ngIf="isTabActive(2)">Not Yet</div>
+            <div *ngIf="isTabActive(3)">
+                <app-review *ngFor="let review of reviews" [review]="review"></app-review>
+            </div>
+        </div>
+    </div>
+</div>

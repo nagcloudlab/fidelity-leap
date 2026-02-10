@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <hr />
+            <app-navbar title="shop-IT"></app-navbar>
+            <hr />
+            <app-cart-badge></app-cart-badge>
+            <hr />
+            <button class="btn btn-primary" (click)="toggleCart()">
+                {{ isCartVisible ? 'View Products' : 'View Cart' }}
+            </button>
+            <hr />
+            <app-cart-view *ngIf="isCartVisible">
+                <div class="h">
+                    <h3>Cart</h3>
+                </div>
+                <!-- <div class="f" #cf>
+                    <span style="color: tomato;">content footer</span>
+                </div> -->
+            </app-cart-view>
+            <br />
+            <app-product-list *ngIf="!isCartVisible"></app-product-list>
+        </div>
+    </div>

@@ -1,0 +1,29 @@
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <hr />
+            <app-navbar title="shop-IT"></app-navbar>
+            <hr />
+
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/" routerLinkActive="active"
+                        [routerLinkActiveOptions]="{ exact: true }">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/products" routerLinkActive="active">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/cart" routerLinkActive="active">Cart</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled">Login</a>
+                </li>
+            </ul>
+            <hr />
+
+            <router-outlet></router-outlet>
+
+
+        </div>
+    </div>

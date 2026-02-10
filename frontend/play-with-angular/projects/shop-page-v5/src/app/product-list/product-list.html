@@ -1,0 +1,18 @@
+<div class="list-group">
+
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/products/electronics">Electronics</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " routerLinkActive="active" routerLink="/products/other">Other</a>
+        </li>
+    </ul>
+
+    <hr />
+
+    <div *ngFor="let product of products">
+        <app-product [product]="product"></app-product>
+    </div>
+
+</div>

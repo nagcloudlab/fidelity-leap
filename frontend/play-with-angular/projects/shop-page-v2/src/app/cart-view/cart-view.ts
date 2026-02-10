@@ -1,12 +1,14 @@
 import { DatePipe, NgFor, NgIf } from '@angular/common';
 import { Component, ContentChild, Input, signal, SimpleChange, ViewChild } from '@angular/core';
+import { Highlight } from '../highlight';
 
 @Component({
   selector: 'app-cart-view',
   imports: [
     NgIf,
     NgFor,
-    DatePipe
+    DatePipe,
+    Highlight
   ],
   templateUrl: './cart-view.html',
   styleUrl: './cart-view.css',
