@@ -1,0 +1,55 @@
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+    <div>
+      <h3 class="fw-bold mb-1">Feedbacks</h3>
+      <p class="text-muted mb-0">{{ feedbacks.length }} entries</p>
+    </div>
+    <div class="d-flex gap-2">
+      <span class="badge bg-success-subtle text-success badge-mood">
+        <i class="fa fa-smile-o me-1"></i>Happy
+      </span>
+      <span class="badge bg-warning-subtle text-warning badge-mood">
+        <i class="fa fa-meh-o me-1"></i>Neutral
+      </span>
+      <span class="badge bg-danger-subtle text-danger badge-mood">
+        <i class="fa fa-frown-o me-1"></i>Sad
+      </span>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    @for (fb of feedbacks; track fb.id) {
+      <div class="col-md-6">
+        <div class="card-elevated p-4 h-100 feedback-card">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <div class="d-flex align-items-center gap-2">
+              <div class="avatar">
+                {{ fb.username.charAt(0).toUpperCase() }}
+              </div>
+              <div>
+                <div class="fw-semibold">{{ fb.username }}</div>
+                <small class="text-muted">{{ formatDate(fb.createdAt) }}</small>
+              </div>
+            </div>
+            <span class="badge badge-mood" [class]="getMoodClass(fb.mood)">
+              {{ getMoodEmoji(fb.mood) }} {{ fb.mood }}
+            </span>
+          </div>
+
+          <div class="stars mb-2">
+            @for (filled of getStarsArray(fb.rating); track $index) {
+              @if (filled) {
+                <i class="fa fa-star text-warning"></i>
+              } @else {
+                <i class="fa fa-star text-muted opacity-25"></i>
+              }
+            }
+            <span class="ms-2 text-muted small">{{ fb.rating }}/5</span>
+          </div>
+
+          <p class="mb-0 text-secondary">{{ fb.comment }}</p>
+        </div>
+      </div>
+    }
+  </div>
+</div>

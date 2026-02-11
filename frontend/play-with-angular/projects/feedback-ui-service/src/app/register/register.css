@@ -1,0 +1,13 @@
+.auth-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-control-lg {
+  border-radius: 12px;
+  padding: 12px 16px;
+}

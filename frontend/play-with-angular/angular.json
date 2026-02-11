@@ -321,6 +321,69 @@
         }
       }
     },
+    "feedback-ui-service": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/feedback-ui-service",
+      "sourceRoot": "projects/feedback-ui-service/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "projects/feedback-ui-service/src/main.ts",
+            "tsConfig": "projects/feedback-ui-service/tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/feedback-ui-service/public"
+              }
+            ],
+            "styles": [
+              "projects/feedback-ui-service/src/styles.css"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "feedback-ui-service:build:production"
+            },
+            "development": {
+              "buildTarget": "feedback-ui-service:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test"
+        }
+      }
+    },
     "thinking-in-angular": {
       "projectType": "application",
       "schematics": {},
@@ -375,6 +438,69 @@
             },
             "development": {
               "buildTarget": "thinking-in-angular:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test"
+        }
+      }
+    },
+    "form-management": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/form-management",
+      "sourceRoot": "projects/form-management/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "projects/form-management/src/main.ts",
+            "tsConfig": "projects/form-management/tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/form-management/public"
+              }
+            ],
+            "styles": [
+              "projects/form-management/src/styles.css"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "form-management:build:production"
+            },
+            "development": {
+              "buildTarget": "form-management:build:development"
             }
           },
           "defaultConfiguration": "development"

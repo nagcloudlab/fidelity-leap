@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body">
+                <form #customerForm="ngForm" (submit)="handleSubmit($event,customerForm)">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" [(ngModel)]="customerModel.firstName" name="firstName" required minlength="3"
+                            class="form-control" />
+                        <div class="text-danger">
+                            <div *ngIf="customerForm.submitted || customerForm.controls['firstName']?.touched">
+                                <div *ngIf="customerForm.controls['firstName']?.errors?.['required']">First Name is
+                                    required</div>
+                                <div *ngIf="customerForm.controls['firstName']?.errors?.['minlength']">First Name should
+                                    be at least 3 characters</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" [(ngModel)]="customerModel.lastName" name="lastName" required minlength="3"
+                            class="form-control" />
+                        <div class="text-danger">
+                            <div *ngIf="customerForm.submitted || customerForm.controls['lastName']?.touched">
+                                <div *ngIf="customerForm.controls['lastName']?.errors?.['required']">Last Name is
+                                    required</div>
+                                <div *ngIf="customerForm.controls['lastName']?.errors?.['minlength']">Last Name should
+                                    be at least 3 characters</div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <button (click)="loadCustomer()" type="button" class="btn btn-secondary">Load Customer</button>
+                    &nbsp;
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                    &nbsp;
+                    <button class="btn btn-primary">Submit</button>
+                    <hr />
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <pre>
+            FormModel:<br/>
+            {{customerForm.value | json}}
+        </pre>
+        <hr />
+        <pre>
+            FormGroup State:<br/>
+            is pristine: {{customerForm.pristine}}<br/>
+            is dirty: {{customerForm.dirty}}<br/>
+            is valid: {{customerForm.valid}}<br/>
+            is invalid: {{customerForm.invalid}}<br/>
+            is touched: {{customerForm.touched}}<br/>
+            is untouched: {{customerForm.untouched}}<br/>
+            is submitted: {{customerForm.submitted}}<br/>
+        </pre>
+        <hr />
+        <pre>
+            LastName Control State:<br/>
+            is pristine: {{customerForm.controls['lastName']?.pristine}}<br/>
+            is dirty: {{customerForm.controls['lastName']?.dirty}}<br/>
+            is valid: {{customerForm.controls['lastName']?.valid}}<br/>
+            is invalid: {{customerForm.controls['lastName']?.invalid}}<br/>
+            is touched: {{customerForm.controls['lastName']?.touched}}<br/>
+            is untouched: {{customerForm.controls['lastName']?.untouched}}<br/>
+        </pre>
+    </div>
+</div>

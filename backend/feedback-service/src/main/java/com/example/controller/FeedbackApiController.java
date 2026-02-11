@@ -1,60 +1,44 @@
 package com.example.controller;
 
-
-import com.example.entity.Feedback;
-import com.example.entity.User;
-import com.example.repository.FeedbackRepository;
-import com.example.repository.UserRepository;
+import com.example.dto.FeedbackRequestDto;
+import com.example.dto.FeedbackResponseDto;
+import com.example.security.UserPrincipal;
+import com.example.service.FeedbackService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/feedbacks")
 public class FeedbackApiController {
 
-    private FeedbackRepository feedbackRepository;
-    private UserRepository userRepository;
+    private final FeedbackService feedbackService;
 
-    public FeedbackApiController(FeedbackRepository feedbackRepository, UserRepository userRepository) {
-        this.feedbackRepository = feedbackRepository;
-        this.userRepository = userRepository;
+    public FeedbackApiController(FeedbackService feedbackService) {
+        this.feedbackService = feedbackService;
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllFeedbacks() {
-        Authentication authentication = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        if(username.equals("admin")) {
-            return ResponseEntity.ok(feedbackRepository.findAll());
-        } else {
-            User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
-            return ResponseEntity.ok(feedbackRepository.findByUserId(user.getId()));
-        }
+    public ResponseEntity<List<FeedbackResponseDto>> getAllFeedbacks(Authentication authentication) {
+        UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
+        return ResponseEntity.ok(feedbackService.getAllFeedbacks(principal));
     }
 
     @PostMapping
-    public ResponseEntity<?> createFeedback(@RequestBody Feedback feedback) {
-        Authentication authentication = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        userRepository.findByUsername(username).ifPresent(user -> feedback.setUser(user));
-        Feedback savedFeedback = feedbackRepository.save(feedback);
-        // status code 201: Created
-        return ResponseEntity.status(201).body(savedFeedback);
+    public ResponseEntity<FeedbackResponseDto> createFeedback(@Valid @RequestBody FeedbackRequestDto dto,
+                                                               Authentication authentication) {
+        UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
+        FeedbackResponseDto response = feedbackService.createFeedback(dto, principal);
+        return ResponseEntity.status(201).body(response);
     }
-
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteFeedback(@RequestParam Long id) {
-        Authentication authentication = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        if(!username.equals("admin")) {
-            return ResponseEntity.status(403).body("Forbidden: Only admin can delete feedback");
-        }
-        feedbackRepository.deleteById(id);
-        // status code 204: No Content
+    public ResponseEntity<Void> deleteFeedback(@PathVariable Long id, Authentication authentication) {
+        UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
+        feedbackService.deleteFeedback(id, principal);
         return ResponseEntity.noContent().build();
     }
-
-
 }

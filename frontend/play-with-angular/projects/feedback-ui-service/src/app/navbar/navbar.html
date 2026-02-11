@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark gradient-bg shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold" routerLink="/">
+      <i class="fa fa-comments-o me-2"></i>FeedbackHub
+    </a>
+    <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse" data-bs-target="#navContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <i class="fa fa-home me-1"></i>Home
+          </a>
+        </li>
+        @if (isLoggedIn()) {
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/feedback" routerLinkActive="active">
+              <i class="fa fa-pencil-square-o me-1"></i>Give Feedback
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/feedbacks" routerLinkActive="active">
+              <i class="fa fa-list me-1"></i>View Feedbacks
+            </a>
+          </li>
+        }
+      </ul>
+
+      <div class="d-flex align-items-center gap-2">
+        @if (isLoggedIn()) {
+          <span class="text-white-50 me-2">
+            <i class="fa fa-user-circle me-1"></i>{{ username() }}
+          </span>
+          <button class="btn btn-outline-light btn-sm rounded-pill px-3" (click)="logout()">
+            <i class="fa fa-sign-out me-1"></i>Logout
+          </button>
+        } @else {
+          <a class="btn btn-outline-light btn-sm rounded-pill px-3" routerLink="/login">
+            <i class="fa fa-sign-in me-1"></i>Login
+          </a>
+          <a class="btn btn-light btn-sm rounded-pill px-3 fw-semibold" routerLink="/register">
+            Sign Up
+          </a>
+        }
+      </div>
+    </div>
+  </div>
+</nav>

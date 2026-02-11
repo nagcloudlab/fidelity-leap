@@ -34,6 +34,18 @@
     },
     {
       "path": "./projects/thinking-in-angular/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/feedback-ui-service/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/feedback-ui-service/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/form-management/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/form-management/tsconfig.spec.json"
     }
   ]
 }

@@ -1,0 +1,10 @@
+
+
+
+
+In Angular, Working with form, need understand the following terms:
+
+
+1. FormControl: It is a class that tracks
+2. FormGroup: It is a class that tracks the value and validity state of a group of FormControl instances.
+3. FormArray: It is a class that tracks

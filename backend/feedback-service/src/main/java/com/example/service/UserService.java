@@ -3,6 +3,8 @@ package com.example.service;
 import com.example.dto.CreateUserRequestDto;
 import com.example.dto.CreateUserResponseDto;
 import com.example.entity.User;
+import com.example.exception.DuplicateResourceException;
+import com.example.exception.ResourceNotFoundException;
 import com.example.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,33 +15,35 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService implements UserDetailsService {
 
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
-
     public CreateUserResponseDto createUser(CreateUserRequestDto createUserRequestDto) {
-        // - input is valid
-        // - check is username already exists
-        // - save the user to the database
-        // dto to entity
+        if (userRepository.findByUsername(createUserRequestDto.getUsername()).isPresent()) {
+            throw new DuplicateResourceException("Username already exists: " + createUserRequestDto.getUsername());
+        }
+
         User user = new User();
         user.setUsername(createUserRequestDto.getUsername());
-        // - hash the password
         user.setPassword(passwordEncoder.encode(createUserRequestDto.getPassword()));
         user.setEmail(createUserRequestDto.getEmail());
-        // - save the user to the database
         userRepository.save(user);
-        // - return a response
+
         CreateUserResponseDto createUserResponseDto = new CreateUserResponseDto();
         createUserResponseDto.setUsername(user.getUsername());
         createUserResponseDto.setEmail(user.getEmail());
         createUserResponseDto.setMessage("User created successfully");
         return createUserResponseDto;
+    }
+
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found: " + username));
     }
 
     @Override
@@ -49,7 +53,7 @@ public class UserService implements UserDetailsService {
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
                 .password(user.getPassword())
-                .authorities("USER") // You can set roles/authorities as needed
+                .authorities("ROLE_" + user.getRole())
                 .build();
     }
 }
