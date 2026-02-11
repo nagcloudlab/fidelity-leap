@@ -15,11 +15,6 @@
             <i class="fa fa-exclamation-circle me-2"></i>{{ errorMessage() }}
           </div>
         }
-        @if (successMessage()) {
-          <div class="alert alert-success d-flex align-items-center py-2" role="alert">
-            <i class="fa fa-check-circle me-2"></i>{{ successMessage() }}
-          </div>
-        }
 
         <form (ngSubmit)="onSubmit()">
           <div class="mb-3">
@@ -38,8 +33,12 @@
                    placeholder="Enter your password"
                    [(ngModel)]="password" name="password" />
           </div>
-          <button type="submit" class="btn btn-gradient w-100 btn-lg mb-3">
-            <i class="fa fa-sign-in me-2"></i>Sign In
+          <button type="submit" class="btn btn-gradient w-100 btn-lg mb-3" [disabled]="loading()">
+            @if (loading()) {
+              <span class="spinner-border spinner-border-sm me-2"></span>Signing in...
+            } @else {
+              <i class="fa fa-sign-in me-2"></i>Sign In
+            }
           </button>
         </form>
 

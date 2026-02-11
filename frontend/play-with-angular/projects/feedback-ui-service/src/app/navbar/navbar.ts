@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,16 +9,11 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './navbar.css',
 })
 export class Navbar {
-  isLoggedIn = signal(false);
-  username = signal('');
-
-  login(name: string) {
-    this.username.set(name);
-    this.isLoggedIn.set(true);
-  }
+  private router = inject(Router);
+  auth = inject(AuthService);
 
   logout() {
-    this.username.set('');
-    this.isLoggedIn.set(false);
+    this.auth.logout();
+    this.router.navigate(['/']);
   }
 }

@@ -1,63 +1,52 @@
-import { Component } from '@angular/core';
-
-interface Feedback {
-  id: number;
-  mood: string;
-  rating: number;
-  comment: string;
-  createdAt: string;
-  username: string;
-}
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { FeedbackService } from '../services/feedback.service';
+import { AuthService } from '../services/auth.service';
+import { FeedbackResponse } from '../models/feedback.model';
 
 @Component({
   selector: 'app-view-feedbacks',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './view-feedbacks.html',
   styleUrl: './view-feedbacks.css',
 })
-export class ViewFeedbacks {
-  feedbacks: Feedback[] = [
-    {
-      id: 1,
-      mood: 'Happy',
-      rating: 5,
-      comment: 'Absolutely love this service! Everything works seamlessly.',
-      createdAt: '2026-02-11T10:30:00',
-      username: 'alice',
-    },
-    {
-      id: 2,
-      mood: 'Neutral',
-      rating: 3,
-      comment: 'It works fine but could use some UI improvements.',
-      createdAt: '2026-02-10T14:15:00',
-      username: 'bob',
-    },
-    {
-      id: 3,
-      mood: 'Happy',
-      rating: 4,
-      comment: 'Great experience overall. Fast and responsive.',
-      createdAt: '2026-02-09T09:00:00',
-      username: 'charlie',
-    },
-    {
-      id: 4,
-      mood: 'Sad',
-      rating: 2,
-      comment: 'Had trouble logging in a few times. Please fix the auth flow.',
-      createdAt: '2026-02-08T18:45:00',
-      username: 'diana',
-    },
-    {
-      id: 5,
-      mood: 'Happy',
-      rating: 5,
-      comment: 'Best feedback platform I have used. Clean and simple.',
-      createdAt: '2026-02-07T12:00:00',
-      username: 'alice',
-    },
-  ];
+export class ViewFeedbacks implements OnInit {
+  private feedbackService = inject(FeedbackService);
+  auth = inject(AuthService);
+
+  feedbacks = signal<FeedbackResponse[]>([]);
+  loading = signal(true);
+  errorMessage = signal('');
+
+  ngOnInit() {
+    this.loadFeedbacks();
+  }
+
+  loadFeedbacks() {
+    this.loading.set(true);
+    this.errorMessage.set('');
+    this.feedbackService.getAll().subscribe({
+      next: (data) => {
+        this.feedbacks.set(data);
+        this.loading.set(false);
+      },
+      error: (err) => {
+        this.errorMessage.set(err.error?.message ?? 'Failed to load feedbacks.');
+        this.loading.set(false);
+      },
+    });
+  }
+
+  deleteFeedback(id: number) {
+    this.feedbackService.delete(id).subscribe({
+      next: () => {
+        this.feedbacks.update((list) => list.filter((f) => f.id !== id));
+      },
+      error: (err) => {
+        this.errorMessage.set(err.error?.message ?? 'Failed to delete feedback.');
+      },
+    });
+  }
 
   getMoodEmoji(mood: string): string {
     switch (mood) {
@@ -90,6 +79,7 @@ export class ViewFeedbacks {
   }
 
   formatDate(dateStr: string): string {
+    if (!dateStr) return '';
     return new Date(dateStr).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',

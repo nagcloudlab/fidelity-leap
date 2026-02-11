@@ -12,12 +12,6 @@
             <i class="fa fa-exclamation-circle me-2"></i>{{ errorMessage() }}
           </div>
         }
-        @if (successMessage()) {
-          <div class="alert alert-success d-flex align-items-center py-2">
-            <i class="fa fa-check-circle me-2"></i>{{ successMessage() }}
-          </div>
-        }
-
         <form (ngSubmit)="onSubmit()">
           <!-- Mood Selector -->
           <div class="mb-4">
@@ -67,8 +61,12 @@
             </textarea>
           </div>
 
-          <button type="submit" class="btn btn-gradient w-100 btn-lg">
-            <i class="fa fa-paper-plane me-2"></i>Submit Feedback
+          <button type="submit" class="btn btn-gradient w-100 btn-lg" [disabled]="loading()">
+            @if (loading()) {
+              <span class="spinner-border spinner-border-sm me-2"></span>Submitting...
+            } @else {
+              <i class="fa fa-paper-plane me-2"></i>Submit Feedback
+            }
           </button>
         </form>
       </div>

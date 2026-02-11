@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,21 +10,31 @@ import { RouterLink } from '@angular/router';
   styleUrl: './login.css',
 })
 export class Login {
+  private auth = inject(AuthService);
+  private router = inject(Router);
+
   username = '';
   password = '';
   errorMessage = signal('');
-  successMessage = signal('');
+  loading = signal(false);
 
   onSubmit() {
     this.errorMessage.set('');
-    this.successMessage.set('');
 
     if (!this.username || !this.password) {
       this.errorMessage.set('Please fill in all fields.');
       return;
     }
 
-    // Static demo — simulate login
-    this.successMessage.set(`Welcome back, ${this.username}! Redirecting...`);
+    this.loading.set(true);
+    this.auth.login({ username: this.username, password: this.password }).subscribe({
+      next: () => {
+        this.router.navigate(['/feedbacks']);
+      },
+      error: (err) => {
+        this.loading.set(false);
+        this.errorMessage.set(err.error?.message ?? 'Invalid username or password.');
+      },
+    });
   }
 }

@@ -1,5 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { FeedbackService } from '../services/feedback.service';
 
 interface MoodOption {
   value: string;
@@ -14,6 +16,9 @@ interface MoodOption {
   styleUrl: './feedback-form.css',
 })
 export class FeedbackForm {
+  private feedbackService = inject(FeedbackService);
+  private router = inject(Router);
+
   moods: MoodOption[] = [
     { value: 'Happy', emoji: '\uD83D\uDE0A', label: 'Happy' },
     { value: 'Neutral', emoji: '\uD83D\uDE10', label: 'Neutral' },
@@ -25,7 +30,7 @@ export class FeedbackForm {
   hoverRating = 0;
   comment = '';
   errorMessage = signal('');
-  successMessage = signal('');
+  loading = signal(false);
 
   selectMood(mood: string) {
     this.selectedMood = mood;
@@ -49,7 +54,6 @@ export class FeedbackForm {
 
   onSubmit() {
     this.errorMessage.set('');
-    this.successMessage.set('');
 
     if (!this.selectedMood) {
       this.errorMessage.set('Please select a mood.');
@@ -60,10 +64,17 @@ export class FeedbackForm {
       return;
     }
 
-    // Static demo
-    this.successMessage.set('Thank you! Your feedback has been submitted.');
-    this.selectedMood = '';
-    this.rating = 0;
-    this.comment = '';
+    this.loading.set(true);
+    this.feedbackService
+      .create({ mood: this.selectedMood, rating: this.rating, comment: this.comment })
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/feedbacks']);
+        },
+        error: (err) => {
+          this.loading.set(false);
+          this.errorMessage.set(err.error?.message ?? 'Failed to submit feedback.');
+        },
+      });
   }
 }

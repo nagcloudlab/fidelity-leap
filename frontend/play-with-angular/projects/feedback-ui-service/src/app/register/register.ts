@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -9,16 +10,18 @@ import { RouterLink } from '@angular/router';
   styleUrl: './register.css',
 })
 export class Register {
+  private auth = inject(AuthService);
+  private router = inject(Router);
+
   username = '';
   email = '';
   password = '';
   confirmPassword = '';
   errorMessage = signal('');
-  successMessage = signal('');
+  loading = signal(false);
 
   onSubmit() {
     this.errorMessage.set('');
-    this.successMessage.set('');
 
     if (!this.username || !this.email || !this.password || !this.confirmPassword) {
       this.errorMessage.set('Please fill in all fields.');
@@ -29,11 +32,19 @@ export class Register {
       return;
     }
 
-    // Static demo
-    this.successMessage.set('Account created! You can now log in.');
-    this.username = '';
-    this.email = '';
-    this.password = '';
-    this.confirmPassword = '';
+    this.loading.set(true);
+    this.auth
+      .register({ username: this.username, password: this.password, email: this.email })
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/login'], {
+            queryParams: { registered: 'true' },
+          });
+        },
+        error: (err) => {
+          this.loading.set(false);
+          this.errorMessage.set(err.error?.message ?? 'Registration failed. Try again.');
+        },
+      });
   }
 }

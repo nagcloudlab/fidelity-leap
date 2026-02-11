@@ -1,0 +1,101 @@
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body">
+                <form [formGroup]="customerForm" (submit)="handleSubmit()">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" formControlName="firstName" required minlength="3" class="form-control" />
+                        <div class="text-danger">
+                            <div *ngIf="submitted || customerForm.controls['firstName']?.touched">
+                                <div *ngIf="customerForm.controls['firstName']?.errors?.['required']">First Name is
+                                    required</div>
+                                <div *ngIf="customerForm.controls['firstName']?.errors?.['minlength']">First Name should
+                                    be at least 3 characters</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" formControlName="lastName" required minlength="3" class="form-control" />
+                        <div class="text-danger">
+                            <div *ngIf="submitted || customerForm.controls['lastName']?.touched">
+                                <div *ngIf="customerForm.controls['lastName']?.errors?.['required']">Last Name is
+                                    required</div>
+                                <div *ngIf="customerForm.controls['lastName']?.errors?.['minlength']">Last Name
+                                    should
+                                    be at least 3 characters</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div formGroupName="emailGroup">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" formControlName="email" required class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmEmail">Confirm Email</label>
+                            <input type="email" formControlName="confirmEmail" required class="form-control" />
+                        </div>
+                        <div class="text-danger">
+                            <div *ngIf="submitted || customerForm.controls['emailGroup']?.touched">
+                                <div *ngIf="customerForm.controls['emailGroup']?.errors?.['emailMismatch']">Email and
+                                    Confirm Email should match</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="notification">Notification Preference</label>
+                        <select formControlName="notification" class="form-control">
+                            <option value="email">Email</option>
+                            <option value="text">Text Message</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="text" formControlName="phone" class="form-control" />
+                        <div class="text-danger">
+                            <div *ngIf="submitted || customerForm.controls['phone']?.touched">
+                                <div *ngIf="customerForm.controls['phone']?.errors?.['required']">Phone is required when
+                                    notification preference is Text Message</div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <button type="button" class="btn btn-secondary">Load Customer</button>
+                    &nbsp;
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                    &nbsp;
+                    <button class="btn btn-primary">Submit</button>
+                    <hr />
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <pre>
+            FormModel:<br/>
+            {{customerForm.value | json}}
+        </pre>
+        <hr />
+        <pre>
+            FormGroup State:<br/>
+            is pristine: {{customerForm.pristine}}<br/>
+            is dirty: {{customerForm.dirty}}<br/>
+            is valid: {{customerForm.valid}}<br/>
+            is invalid: {{customerForm.invalid}}<br/>
+            is touched: {{customerForm.touched}}<br/>
+            is untouched: {{customerForm.untouched}}<br/>
+        </pre>
+        <hr />
+        <pre>
+            LastName Control State:<br/>
+            is pristine: {{customerForm.controls['lastName']?.pristine}}<br/>
+            is dirty: {{customerForm.controls['lastName']?.dirty}}<br/>
+            is valid: {{customerForm.controls['lastName']?.valid}}<br/>
+            is invalid: {{customerForm.controls['lastName']?.invalid}}<br/>
+            is touched: {{customerForm.controls['lastName']?.touched}}<br/>
+            is untouched: {{customerForm.controls['lastName']?.untouched}}<br/>
+        </pre>
+    </div>
+</div>

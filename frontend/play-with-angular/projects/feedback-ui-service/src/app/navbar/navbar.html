@@ -15,7 +15,7 @@
             <i class="fa fa-home me-1"></i>Home
           </a>
         </li>
-        @if (isLoggedIn()) {
+        @if (auth.isLoggedIn()) {
           <li class="nav-item">
             <a class="nav-link" routerLink="/feedback" routerLinkActive="active">
               <i class="fa fa-pencil-square-o me-1"></i>Give Feedback
@@ -30,9 +30,12 @@
       </ul>
 
       <div class="d-flex align-items-center gap-2">
-        @if (isLoggedIn()) {
+        @if (auth.isLoggedIn()) {
           <span class="text-white-50 me-2">
-            <i class="fa fa-user-circle me-1"></i>{{ username() }}
+            <i class="fa fa-user-circle me-1"></i>{{ auth.username() }}
+            @if (auth.isAdmin()) {
+              <span class="badge bg-warning text-dark ms-1" style="font-size: 0.65rem;">ADMIN</span>
+            }
           </span>
           <button class="btn btn-outline-light btn-sm rounded-pill px-3" (click)="logout()">
             <i class="fa fa-sign-out me-1"></i>Logout
