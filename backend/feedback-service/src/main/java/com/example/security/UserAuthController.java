@@ -4,6 +4,9 @@ import com.example.dto.CreateUserRequestDto;
 import com.example.dto.CreateUserResponseDto;
 import com.example.service.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,9 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserAuthController {
 
     public UserService userService;
+    private AuthenticationManager authManager;
+    private JwtUtil jwtUtil;
+    private PasswordEncoder passwordEncoder;
 
-    public UserAuthController(UserService userService) {
+    public UserAuthController(UserService userService, AuthenticationManager authManager, JwtUtil jwtUtil, PasswordEncoder passwordEncoder) {
         this.userService = userService;
+        this.authManager = authManager;
+        this.jwtUtil = jwtUtil;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping(
@@ -29,16 +38,15 @@ public class UserAuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody AuthRequest request) {
-
+    public AuthResponse login(@RequestBody AuthRequest request) {
         authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),
                         request.getPassword()
                 )
         );
-
-        return jwtUtil.generateToken(request.getUsername());
+        String token = jwtUtil.generateToken(request.getUsername());
+        return new AuthResponse(token);
     }
 
 }

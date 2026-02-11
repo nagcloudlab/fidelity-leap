@@ -1,6 +1,10 @@
 package com.example.dto;
 
-public class CreateUserDto {
+
+import lombok.Data;
+
+@Data
+public class CreateUserRequestDto {
     private String username;
     private String password;
     private String email;

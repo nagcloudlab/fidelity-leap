@@ -4,8 +4,8 @@ package com.example.dto;
 import lombok.Data;
 
 @Data
-public class CreateUserRequestDto {
+public class CreateUserResponseDto {
     private String username;
-    private String password;
     private String email;
+    private  String message;
 }
