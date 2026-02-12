@@ -1,0 +1,31 @@
+order_id,customer_id,order_date,ship_date,status,payment_method,shipping_method,subtotal,tax,shipping_cost,total_amount
+3001,1001,2024-01-05,2024-01-08,Delivered,Credit Card,Standard,119.98,9.60,5.99,135.57
+3002,1003,2024-01-07,2024-01-09,Delivered,PayPal,Express,349.99,28.00,12.99,390.98
+3003,1002,2024-01-10,2024-01-13,Delivered,Credit Card,Standard,64.98,5.20,5.99,76.17
+3004,1005,2024-01-12,2024-01-15,Delivered,Debit Card,Standard,89.99,7.20,5.99,103.18
+3005,1001,2024-01-18,2024-01-20,Delivered,Credit Card,Express,79.99,6.40,12.99,99.38
+3006,1008,2024-01-22,2024-01-25,Delivered,PayPal,Standard,154.98,12.40,5.99,173.37
+3007,1010,2024-01-25,2024-01-28,Delivered,Credit Card,Standard,34.99,2.80,5.99,43.78
+3008,1006,2024-02-01,2024-02-04,Delivered,Credit Card,Express,209.98,16.80,12.99,239.77
+3009,1012,2024-02-05,2024-02-07,Delivered,Debit Card,Standard,129.99,10.40,5.99,146.38
+3010,1004,2024-02-08,2024-02-11,Delivered,PayPal,Standard,44.99,3.60,5.99,54.58
+3011,1015,2024-02-14,2024-02-16,Delivered,Credit Card,Express,249.98,20.00,12.99,282.97
+3012,1009,2024-02-18,2024-02-21,Delivered,Credit Card,Standard,59.99,4.80,5.99,70.78
+3013,1003,2024-02-22,2024-02-25,Delivered,PayPal,Standard,94.98,7.60,5.99,108.57
+3014,1007,2024-03-01,2024-03-04,Delivered,Debit Card,Standard,29.99,2.40,5.99,38.38
+3015,1018,2024-03-05,2024-03-07,Delivered,Credit Card,Express,179.98,14.40,12.99,207.37
+3016,1020,2024-03-10,2024-03-13,Delivered,Credit Card,Standard,69.99,5.60,5.99,81.58
+3017,1001,2024-03-15,2024-03-18,Delivered,PayPal,Standard,139.98,11.20,5.99,157.17
+3018,1013,2024-03-20,2024-03-22,Delivered,Credit Card,Express,54.99,4.40,12.99,72.38
+3019,1011,2024-03-25,2024-03-28,Delivered,Debit Card,Standard,89.99,7.20,5.99,103.18
+3020,1006,2024-04-01,2024-04-04,Delivered,Credit Card,Standard,319.98,25.60,5.99,351.57
+3021,1002,2024-04-05,2024-04-08,Delivered,PayPal,Express,74.98,6.00,12.99,93.97
+3022,1016,2024-04-10,2024-04-13,Delivered,Credit Card,Standard,109.98,8.80,5.99,124.77
+3023,1019,2024-04-15,2024-04-18,Delivered,Debit Card,Standard,39.99,3.20,5.99,49.18
+3024,1005,2024-04-20,2024-04-23,Shipped,Credit Card,Standard,164.98,13.20,5.99,184.17
+3025,1014,2024-04-25,NULL,Processing,PayPal,Express,224.98,18.00,12.99,255.97
+3026,1020,2024-04-28,NULL,Processing,Credit Card,Standard,49.99,4.00,5.99,59.98
+3027,1009,2024-05-01,NULL,Pending,Debit Card,Standard,299.98,24.00,5.99,329.97
+3028,1012,2024-05-03,NULL,Pending,Credit Card,Express,84.98,6.80,12.99,104.77
+3029,1001,2024-05-05,NULL,Pending,PayPal,Standard,59.99,4.80,5.99,70.78
+3030,1017,2024-05-08,NULL,Pending,Credit Card,Standard,119.99,9.60,5.99,135.58

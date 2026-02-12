@@ -1,0 +1,21 @@
+customer_id,first_name,last_name,email,phone,address,city,state,zip_code,country,signup_date,customer_segment
+1001,John,Smith,john.smith@email.com,555-0101,123 Main St,New York,NY,10001,US,2023-01-15,Premium
+1002,Sarah,Johnson,sarah.j@email.com,555-0102,456 Oak Ave,Los Angeles,CA,90001,US,2023-02-20,Standard
+1003,Michael,Williams,m.williams@email.com,555-0103,789 Pine Rd,Chicago,IL,60601,US,2023-03-10,Premium
+1004,Emily,Brown,emily.b@email.com,555-0104,321 Elm St,Houston,TX,77001,US,2023-04-05,Basic
+1005,David,Jones,d.jones@email.com,555-0105,654 Maple Dr,Phoenix,AZ,85001,US,2023-04-18,Standard
+1006,Jessica,Davis,jess.davis@email.com,555-0106,987 Cedar Ln,Philadelphia,PA,19101,US,2023-05-22,Premium
+1007,Robert,Miller,r.miller@email.com,555-0107,147 Birch Way,San Antonio,TX,78201,US,2023-06-01,Basic
+1008,Amanda,Wilson,a.wilson@email.com,555-0108,258 Walnut St,San Diego,CA,92101,US,2023-06-15,Standard
+1009,James,Moore,j.moore@email.com,555-0109,369 Spruce Ave,Dallas,TX,75201,US,2023-07-03,Premium
+1010,Lisa,Taylor,l.taylor@email.com,555-0110,741 Ash Blvd,San Jose,CA,95101,US,2023-07-20,Standard
+1011,Daniel,Anderson,d.anderson@email.com,555-0111,852 Poplar Ct,Austin,TX,73301,US,2023-08-11,Basic
+1012,Jennifer,Thomas,j.thomas@email.com,555-0112,963 Willow Rd,Jacksonville,FL,32099,US,2023-08-25,Premium
+1013,Christopher,Jackson,c.jackson@email.com,555-0113,159 Hickory Ln,San Francisco,CA,94101,US,2023-09-05,Standard
+1014,Michelle,White,m.white@email.com,555-0114,267 Magnolia Dr,Columbus,OH,43085,US,2023-09-19,Basic
+1015,Kevin,Harris,k.harris@email.com,555-0115,378 Cypress St,Charlotte,NC,28201,US,2023-10-02,Premium
+1016,Rachel,Martin,r.martin@email.com,555-0116,489 Redwood Ave,Indianapolis,IN,46201,US,2023-10-14,Standard
+1017,Andrew,Garcia,a.garcia@email.com,555-0117,591 Sequoia Blvd,Seattle,WA,98101,US,2023-11-01,Basic
+1018,Stephanie,Martinez,s.martinez@email.com,555-0118,612 Sycamore Way,Denver,CO,80201,US,2023-11-18,Premium
+1019,Brian,Robinson,b.robinson@email.com,555-0119,723 Chestnut Rd,Boston,MA,02101,US,2023-12-05,Standard
+1020,Nicole,Clark,n.clark@email.com,555-0120,834 Juniper Ct,Nashville,TN,37201,US,2023-12-22,Premium

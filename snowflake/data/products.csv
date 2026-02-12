@@ -1,0 +1,16 @@
+product_id,product_name,category,sub_category,brand,price,cost,weight_kg,is_active,created_date
+2001,Wireless Mouse,Electronics,Accessories,TechPro,29.99,12.50,0.15,TRUE,2023-01-01
+2002,Mechanical Keyboard,Electronics,Accessories,TechPro,89.99,35.00,0.85,TRUE,2023-01-01
+2003,USB-C Hub,Electronics,Accessories,ConnectPlus,49.99,20.00,0.20,TRUE,2023-01-15
+2004,27 inch Monitor,Electronics,Displays,ViewMax,349.99,180.00,5.50,TRUE,2023-02-01
+2005,Laptop Stand,Electronics,Accessories,ErgoDesk,39.99,15.00,1.20,TRUE,2023-02-15
+2006,Running Shoes,Sports,Footwear,SpeedRun,119.99,45.00,0.65,TRUE,2023-01-01
+2007,Yoga Mat,Sports,Fitness,FlexFit,34.99,10.00,1.50,TRUE,2023-01-01
+2008,Water Bottle,Sports,Accessories,HydroMax,24.99,8.00,0.30,TRUE,2023-03-01
+2009,Bluetooth Headphones,Electronics,Audio,SoundWave,79.99,30.00,0.25,TRUE,2023-01-15
+2010,Desk Lamp,Home,Lighting,BrightLife,44.99,18.00,1.10,TRUE,2023-04-01
+2011,Coffee Maker,Home,Kitchen,BrewMaster,69.99,28.00,3.20,TRUE,2023-01-01
+2012,Backpack,Sports,Bags,TrailBlaze,59.99,22.00,0.90,TRUE,2023-05-01
+2013,Webcam HD,Electronics,Accessories,TechPro,54.99,20.00,0.18,TRUE,2023-03-15
+2014,Fitness Tracker,Electronics,Wearables,FitTech,129.99,50.00,0.05,TRUE,2023-02-01
+2015,Portable Charger,Electronics,Accessories,PowerUp,39.99,14.00,0.35,TRUE,2023-06-01
