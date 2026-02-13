@@ -26,6 +26,8 @@ public class OrderEvent {
     public static class OrderItemEvent {
         private Long productId;
         private String productName;
+        private String category;
+        private String brand;
         private int quantity;
         private double unitPrice;
         private double lineTotal;

@@ -178,7 +178,7 @@ INSERT INTO CUSTOMERS_SOURCE VALUES
 -- This simulates having CSV files in your stage (just like PUT would create)
 COPY INTO @STG_CSV/customers/customers_batch1
     FROM CUSTOMERS_SOURCE
-    FILE_FORMAT = (TYPE = 'CSV' HEADER = TRUE)
+    FILE_FORMAT = (TYPE = 'CSV', HEADER = TRUE)
     OVERWRITE = TRUE;
 
 -- Verify the file was written to the stage

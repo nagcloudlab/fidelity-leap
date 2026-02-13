@@ -6,7 +6,7 @@ import { OrderRequest, OrderResponse } from '../models/order.model';
 
 @Injectable({ providedIn: 'root' })
 export class OrderService {
-  private readonly API = 'http://localhost:8082/api/v1';
+  private readonly API = 'http://localhost:8086/api/v1';
 
   constructor(private http: HttpClient) {}
 

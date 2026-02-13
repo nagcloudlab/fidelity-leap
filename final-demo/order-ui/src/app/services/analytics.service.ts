@@ -5,7 +5,7 @@ import { OrderSummary, TopProduct, RecentOrder } from '../models/analytics.model
 
 @Injectable({ providedIn: 'root' })
 export class AnalyticsService {
-  private readonly API = 'http://localhost:8083/api/v1/analytics';
+  private readonly API = 'http://localhost:8086/api/v1/analytics';
 
   constructor(private http: HttpClient) {}
 

@@ -6,20 +6,22 @@ An end-to-end order processing pipeline demonstrating **Java, Spring Boot, Angul
 
 ```
 Angular UI (port 4200)
-  ├── Product List, Order Form, Order History
-  └── Analytics Dashboard (reads from Snowflake)
         │
-        ▼
-Order Service (port 8082, H2 - OLTP)
-  ├── POST /api/v1/orders → validate → save to H2 → publish Kafka
-  ├── GET  /api/v1/orders → read from H2
-  └── GET  /api/v1/products → product catalog
+        ▼ (all requests)
+API Gateway (port 8086) ─── single entry point
         │
-   Kafka "order-events"
-        │
-        ├──▶ Notification Service (port 8084, logs to console)
-        └──▶ Analytics Service (port 8083, writes to Snowflake - OLAP)
-                └── GET /api/v1/analytics/* → reads from Snowflake views
+        ├── /api/v1/products ──────► Order Service (8082, H2 - OLTP)
+        ├── /api/v1/orders ────────► Order Service ──► Accounts Service (8085, H2)
+        ├── /api/v1/accounts/* ────► Accounts Service    check balance + debit
+        ├── /api/v1/analytics/* ───► Analytics Service (8083) ──► Snowflake
+        │                                  ▲
+        │                                  │
+        │                          Kafka "order-events"
+        │                                  │
+        │              ┌───────────────────┤
+        │              ▼                   │
+        │   Notification (8084)    Order Service publishes
+        │   Console logs           after order confirmed
 ```
 
 ## Prerequisites
@@ -47,7 +49,18 @@ snowflake/02_create_views.sql
 snowflake/03_stream_and_task.sql
 ```
 
-### 3. Start Order Service (port 8082)
+### 3. Start Accounts Service (port 8085)
+
+```bash
+cd accounts-service
+mvn spring-boot:run
+```
+
+Verify: `curl http://localhost:8085/api/v1/accounts` (returns 5 customer accounts)
+
+H2 Console: http://localhost:8085/h2-console (JDBC URL: `jdbc:h2:file:./data/accountsdb`)
+
+### 4. Start Order Service (port 8082)
 
 ```bash
 cd order-service
@@ -58,14 +71,14 @@ Verify: `curl http://localhost:8082/api/v1/products` (returns 10 products)
 
 H2 Console: http://localhost:8082/h2-console (JDBC URL: `jdbc:h2:file:./data/orderdb`)
 
-### 4. Start Notification Service (port 8084)
+### 5. Start Notification Service (port 8084)
 
 ```bash
 cd notification-service
 mvn spring-boot:run
 ```
 
-### 5. Start Analytics Service (port 8083)
+### 6. Start Analytics Service (port 8083)
 
 ```bash
 cd analytics-service
@@ -74,7 +87,16 @@ mvn spring-boot:run
 
 > **Fallback mode:** Set `snowflake.fallback.log-only=true` in `application.properties` to log SQL instead of writing to Snowflake.
 
-### 6. Start Angular UI (port 4200)
+### 7. Start API Gateway (port 8086)
+
+```bash
+cd gateway-service
+mvn spring-boot:run
+```
+
+Verify: `curl http://localhost:8086/api/v1/products` (proxied to order-service)
+
+### 8. Start Angular UI (port 4200)
 
 ```bash
 cd order-ui
@@ -88,9 +110,9 @@ Open http://localhost:4200
 | Technology | Where Used |
 |-----------|-----------|
 | Java 17 | All backend services |
-| Spring Boot 4.0.2 | Order, Analytics, Notification services |
+| Spring Boot 4.0.2 | Gateway, Order, Accounts, Analytics, Notification services |
 | Spring Data JPA | Order service entities & repositories |
-| H2 Database | Order service OLTP storage |
+| H2 Database | Order + Accounts service OLTP storage |
 | Apache Kafka | Event-driven communication between services |
 | Snowflake | Analytics OLAP storage + views + streams + tasks |
 | Angular 21 | Frontend UI with standalone components & signals |
@@ -107,6 +129,15 @@ Open http://localhost:4200
 | GET | /api/v1/orders/{id} | Get order by ID |
 | POST | /api/v1/orders | Place a new order |
 
+### Accounts Service (port 8085)
+
+| Method | Endpoint | Description |
+|--------|---------|-------------|
+| GET | /api/v1/accounts | List all accounts |
+| GET | /api/v1/accounts/{email} | Get account by email |
+| GET | /api/v1/accounts/{email}/check?amount=X | Check if balance >= amount |
+| POST | /api/v1/accounts/{email}/debit | Debit amount from account |
+
 ### Analytics Service (port 8083)
 
 | Method | Endpoint | Description |
@@ -114,6 +145,10 @@ Open http://localhost:4200
 | GET | /api/v1/analytics/summary | Daily order summary from Snowflake |
 | GET | /api/v1/analytics/top-products | Product performance metrics |
 | GET | /api/v1/analytics/recent-orders | Recent orders from Snowflake |
+
+### API Gateway (port 8086)
+
+All endpoints above are also available through the gateway. Angular UI uses the gateway as a single entry point.
 
 ## Directory Structure
 
@@ -125,6 +160,8 @@ final-demo/
 │   ├── 03_stream_and_task.sql
 │   └── 04_verify_queries.sql
 ├── order-service/              # Spring Boot, H2, Kafka Producer
+├── accounts-service/           # Spring Boot, H2, Balance Check + Debit
+├── gateway-service/            # Spring Boot, API Gateway (single UI entry point)
 ├── analytics-service/          # Spring Boot, Kafka Consumer, Snowflake JDBC
 ├── notification-service/       # Spring Boot, Kafka Consumer
 ├── order-ui/                   # Angular 21 standalone app

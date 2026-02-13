@@ -2,6 +2,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrderService } from '../services/order.service';
+import { AccountsService, Account, BalanceResponse } from '../services/accounts.service';
 import { Product } from '../models/product.model';
 
 @Component({
@@ -12,10 +13,12 @@ import { Product } from '../models/product.model';
 })
 export class OrderForm implements OnInit {
   private orderService = inject(OrderService);
+  private accountsService = inject(AccountsService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
   products = signal<Product[]>([]);
+  accounts = signal<Account[]>([]);
   customerName = '';
   customerEmail = '';
   selectedProductId = 0;
@@ -23,6 +26,8 @@ export class OrderForm implements OnInit {
   errorMessage = signal('');
   successMessage = signal('');
   loading = signal(false);
+  balanceInfo = signal<BalanceResponse | null>(null);
+  balanceLoading = signal(false);
 
   ngOnInit() {
     this.orderService.getProducts().subscribe({
@@ -34,6 +39,38 @@ export class OrderForm implements OnInit {
         }
       },
     });
+    this.accountsService.getAllAccounts().subscribe({
+      next: (data) => this.accounts.set(data),
+    });
+  }
+
+  onAccountSelect() {
+    const account = this.accounts().find((a) => a.customerEmail === this.customerEmail);
+    if (account) {
+      this.customerName = account.customerName;
+      this.onEmailBlur();
+    } else {
+      this.customerName = '';
+      this.balanceInfo.set(null);
+    }
+  }
+
+  onEmailBlur() {
+    if (this.customerEmail && this.customerEmail.includes('@')) {
+      this.balanceLoading.set(true);
+      this.accountsService.getAccount(this.customerEmail).subscribe({
+        next: (data) => {
+          this.balanceInfo.set(data);
+          this.balanceLoading.set(false);
+        },
+        error: () => {
+          this.balanceInfo.set(null);
+          this.balanceLoading.set(false);
+        },
+      });
+    } else {
+      this.balanceInfo.set(null);
+    }
   }
 
   getSelectedProduct(): Product | undefined {
@@ -71,6 +108,7 @@ export class OrderForm implements OnInit {
           this.customerEmail = '';
           this.selectedProductId = 0;
           this.quantity = 1;
+          this.balanceInfo.set(null);
         },
         error: (err) => {
           this.loading.set(false);

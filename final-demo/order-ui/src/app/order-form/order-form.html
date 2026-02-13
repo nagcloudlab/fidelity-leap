@@ -28,20 +28,29 @@
         <form (ngSubmit)="onSubmit()">
           <div class="mb-3">
             <label class="form-label fw-semibold">
-              <i class="fa fa-user me-1 text-muted"></i>Customer Name
+              <i class="fa fa-user me-1 text-muted"></i>Customer Account
             </label>
-            <input type="text" class="form-control form-control-lg"
-                   placeholder="Enter your name"
-                   [(ngModel)]="customerName" name="customerName" />
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label fw-semibold">
-              <i class="fa fa-envelope me-1 text-muted"></i>Email
-            </label>
-            <input type="email" class="form-control form-control-lg"
-                   placeholder="you@example.com"
-                   [(ngModel)]="customerEmail" name="customerEmail" />
+            <select class="form-control form-control-lg"
+                    [(ngModel)]="customerEmail" name="customerEmail"
+                    (ngModelChange)="onAccountSelect()">
+              <option value="" disabled>Select a customer</option>
+              @for (account of accounts(); track account.id) {
+                <option [value]="account.customerEmail">
+                  {{ account.customerName }} ({{ account.customerEmail }}) — ${{ account.balance.toFixed(2) }}
+                </option>
+              }
+            </select>
+            @if (balanceLoading()) {
+              <small class="text-muted mt-1 d-block">
+                <span class="spinner-border spinner-border-sm me-1"></span>Checking balance...
+              </small>
+            }
+            @if (balanceInfo()) {
+              <small class="mt-1 d-block" [class]="balanceInfo()!.balance < getTotal() ? 'text-danger' : 'text-success'">
+                <i class="fa fa-wallet me-1"></i>
+                Balance: <strong>${{ balanceInfo()!.balance.toFixed(2) }}</strong>
+              </small>
+            }
           </div>
 
           <div class="mb-3">
@@ -72,6 +81,14 @@
             <div class="alert alert-info py-2 mb-4">
               <i class="fa fa-info-circle me-1"></i>
               Order total: <strong>${{ getTotal().toFixed(2) }}</strong>
+            </div>
+          }
+
+          @if (balanceInfo() && getSelectedProduct() && balanceInfo()!.balance < getTotal()) {
+            <div class="alert alert-warning py-2 mb-4">
+              <i class="fa fa-exclamation-triangle me-1"></i>
+              Insufficient balance! Available: <strong>${{ balanceInfo()!.balance.toFixed(2) }}</strong>,
+              Required: <strong>${{ getTotal().toFixed(2) }}</strong>
             </div>
           }
 

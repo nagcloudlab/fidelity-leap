@@ -40,37 +40,66 @@ Total Duration: ~65 minutes
 
 ---
 
-## Act 2: Place an Order (10 min)
+## Act 2: Place an Order with Balance Check (15 min)
 
-**Technologies:** Angular, REST, @Transactional
+**Technologies:** Angular, REST, @Transactional, Synchronous Service-to-Service Calls
 
 ### What to Show
 
-1. **Start Angular UI:**
+1. **Start Accounts Service:**
+   ```bash
+   cd accounts-service
+   mvn spring-boot:run
+   ```
+
+2. **Show pre-loaded accounts:**
+   ```bash
+   curl http://localhost:8085/api/v1/accounts | python3 -m json.tool
+   ```
+   Note Charlie Davis has only $50 — perfect for testing insufficient balance.
+
+3. **Test balance check API:**
+   ```bash
+   curl "http://localhost:8085/api/v1/accounts/john@example.com/check?amount=100" | python3 -m json.tool
+   # sufficient: true
+
+   curl "http://localhost:8085/api/v1/accounts/charlie@example.com/check?amount=100" | python3 -m json.tool
+   # sufficient: false
+   ```
+
+4. **Start Angular UI:**
    ```bash
    cd order-ui
    ng serve
    ```
 
-2. **Browse Products:** Navigate to http://localhost:4200/products
+5. **Browse Products:** Navigate to http://localhost:4200/products
 
-3. **Click "Order" on a product** - navigates to order form with product pre-selected
+6. **Click "Order" on a product** - navigates to order form with product pre-selected
 
-4. **Fill in order form:**
+7. **Fill in order form (successful order):**
    - Customer Name: `John Doe`
-   - Email: `john@example.com`
+   - Email: `john@example.com` — balance shows after tabbing out
    - Product: Wireless Mouse
    - Quantity: 3
+   - Submit → order succeeds, balance deducted
 
-5. **Submit order** - show success message
+8. **Fill in order form (rejected order):**
+   - Customer Name: `Charlie Davis`
+   - Email: `charlie@example.com` — low balance warning appears
+   - Product: an expensive item
+   - Submit → "Insufficient balance" error
 
-6. **View Order History:** Navigate to /orders - show the order in the table
+9. **Show H2 Console on accounts-service (port 8085):**
+   - Query ACCOUNTS table to see John's updated balance
 
-7. **Show H2 Console:** Query ORDERS and ORDER_ITEMS tables
+10. **View Order History:** Navigate to /orders - show the successful order
 
 ### Key Talking Points
 - Angular standalone components with signals
 - `HttpClient` service pattern
+- Synchronous REST call: order-service → accounts-service (balance check + debit)
+- Contrast with async Kafka pattern (coming in Act 3)
 - `@Valid` request body validation
 - `@Transactional` ensures order + items saved atomically
 
@@ -212,20 +241,25 @@ Draw or display the full architecture diagram:
 ```
 Angular UI (4200)
     │
-    ├── GET /products ──────► Order Service (8082, H2)
-    ├── POST /orders ───────► Order Service ──► Kafka "order-events"
-    ├── GET /orders ────────►                      │
-    │                                    ┌─────────┼──────────┐
-    │                                    ▼                    ▼
-    │                         Notification (8084)    Analytics (8083)
-    │                         Console logs           Snowflake JDBC
-    │                                                     │
-    └── GET /analytics/* ──────────────────────────► Snowflake Views
+    ├── GET /products ──────────► Order Service (8082, H2)
+    ├── POST /orders ───────────► Order Service ──► Accounts Service (8085, H2)
+    │                                  │              check balance + debit
+    │                                  ▼
+    │                             Kafka "order-events"
+    │                                  │
+    │                        ┌─────────┴──────────┐
+    │                        ▼                    ▼
+    │             Notification (8084)     Analytics (8083)
+    │             Console logs            Snowflake JDBC
+    │                                          │
+    └── GET /analytics/* ──────────────► Snowflake Views
 ```
 
 ### Key Talking Points
 - Microservices: each service has a single responsibility
-- Event-driven: Kafka decouples services
+- Synchronous REST: order-service calls accounts-service for balance check (need immediate answer)
+- Asynchronous Kafka: order events published for notification + analytics (fire-and-forget)
+- When to use sync vs async: balance check must happen before order confirmation; notifications can happen later
 - OLTP vs OLAP: right tool for the right job
 - Full stack: Angular + Spring Boot + Snowflake
 - Production patterns: CORS, validation, error handling, DTOs
@@ -241,3 +275,5 @@ Angular UI (4200)
 | No analytics data | Set `snowflake.fallback.log-only=false` and verify Snowflake tables exist |
 | CORS errors | Ensure services have CorsConfig allowing localhost:4200 |
 | H2 console blank | Use JDBC URL `jdbc:h2:file:./data/orderdb` with user `sa` |
+| "Insufficient balance" on every order | Start accounts-service on port 8085 before order-service |
+| Accounts service connection refused | Ensure accounts-service is running: `curl http://localhost:8085/api/v1/accounts` |

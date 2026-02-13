@@ -24,9 +24,9 @@ import java.util.UUID;
 @Configuration
 class DataSourceConfig {
 
-    @Bean
-    @Primary
-    @ConfigurationProperties(prefix = "spring.datasource")
+//    @Bean
+//    @Primary
+//    @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource mysqlDataSource() {
         return DataSourceBuilder.create()
                 .type(com.zaxxer.hikari.HikariDataSource.class)
@@ -50,10 +50,10 @@ class DataSourceConfig {
 
 
 @Data
-@Entity
-@Table(name = "accounts")
+//@Entity
+//@Table(name = "accounts")
 class Account {
-    @Id
+//    @Id
     private String number;
     private double balance;
 }
@@ -71,35 +71,43 @@ class Transaction {
     private Account account;
 }
 
-interface AccountRepository extends JpaRepository<Account, String> {
-    // Repository methods for Account
-}
+//interface AccountRepository extends JpaRepository<Account, String> {
+//    // Repository methods for Account
+//}
 
 
 @Service
 class TransferService {
-    private final AccountRepository accountRepository;
+//    private final AccountRepository accountRepository;
     private final JdbcTemplate snowflakeJdbcTemplate;
 
-    public TransferService(AccountRepository accountRepository,  JdbcTemplate snowflakeJdbcTemplate) {
-        this.accountRepository = accountRepository;
+    public TransferService(/*AccountRepository accountRepository,*/  JdbcTemplate snowflakeJdbcTemplate) {
+//        this.accountRepository = accountRepository;
         this.snowflakeJdbcTemplate = snowflakeJdbcTemplate;
     }
 
     @Transactional
     public void transfer(String fromAccountNumber, String toAccountNumber, double amount) {
-        Account fromAccount = accountRepository.findById(fromAccountNumber).orElseThrow();
-        Account toAccount = accountRepository.findById(toAccountNumber).orElseThrow();
+//        Account fromAccount = accountRepository.findById(fromAccountNumber).orElseThrow();
+//        Account toAccount = accountRepository.findById(toAccountNumber).orElseThrow();
+//
+//        if (fromAccount.getBalance() < amount) {
+//            throw new IllegalArgumentException("Insufficient funds");
+//        }
+//
+//        fromAccount.setBalance(fromAccount.getBalance() - amount);
+//        toAccount.setBalance(toAccount.getBalance() + amount);
+//
+//        accountRepository.save(fromAccount);
+//        accountRepository.save(toAccount);
 
-        if (fromAccount.getBalance() < amount) {
-            throw new IllegalArgumentException("Insufficient funds");
-        }
+        Account fromAccount = new Account();
+        fromAccount.setNumber(fromAccountNumber);
+        fromAccount.setBalance(1000.0); // Example balance
 
-        fromAccount.setBalance(fromAccount.getBalance() - amount);
-        toAccount.setBalance(toAccount.getBalance() + amount);
-
-        accountRepository.save(fromAccount);
-        accountRepository.save(toAccount);
+        Account toAccount = new Account();
+        toAccount.setNumber(toAccountNumber);
+        toAccount.setBalance(500.0); // Example balance
 
         Transaction withdrawal = new Transaction();
         withdrawal.setId(UUID.randomUUID().toString());
