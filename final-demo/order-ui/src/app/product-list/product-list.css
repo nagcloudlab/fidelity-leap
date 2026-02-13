@@ -1,0 +1,10 @@
+.product-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #667eea20, #764ba220);
+  color: #667eea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

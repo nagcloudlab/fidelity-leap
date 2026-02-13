@@ -1,0 +1,57 @@
+-- ============================================================
+-- 03_stream_and_task.sql
+-- CDC stream on ORDERS_ANALYTICS + scheduled task
+-- ============================================================
+
+USE ROLE SYSADMIN;
+USE WAREHOUSE TRAINING_WH;
+USE DATABASE WORKSHOP_DB;
+USE SCHEMA ANALYTICS;
+
+-- Stream captures inserts/updates/deletes on ORDERS_ANALYTICS
+CREATE OR REPLACE STREAM ORDERS_ANALYTICS_STREAM
+    ON TABLE ORDERS_ANALYTICS
+    APPEND_ONLY = TRUE;
+
+-- Realtime summary table (updated by task)
+CREATE OR REPLACE TABLE REALTIME_ORDER_SUMMARY (
+    SUMMARY_DATE    DATE            NOT NULL,
+    TOTAL_ORDERS    NUMBER          NOT NULL,
+    TOTAL_REVENUE   NUMBER(12,2)    NOT NULL,
+    AVG_ORDER_VALUE NUMBER(10,2)    NOT NULL,
+    LAST_UPDATED    TIMESTAMP_NTZ   DEFAULT CURRENT_TIMESTAMP(),
+    PRIMARY KEY (SUMMARY_DATE)
+);
+
+-- Task: runs every 1 minute when stream has data
+CREATE OR REPLACE TASK REFRESH_ORDER_SUMMARY
+    WAREHOUSE = TRAINING_WH
+    SCHEDULE  = '1 MINUTE'
+    WHEN SYSTEM$STREAM_HAS_DATA('ORDERS_ANALYTICS_STREAM')
+AS
+    MERGE INTO REALTIME_ORDER_SUMMARY tgt
+    USING (
+        SELECT
+            DATE_TRUNC('DAY', ORDER_DATE)::DATE  AS SUMMARY_DATE,
+            COUNT(*)                              AS NEW_ORDERS,
+            SUM(TOTAL_AMOUNT)                     AS NEW_REVENUE,
+            AVG(TOTAL_AMOUNT)                     AS NEW_AVG
+        FROM ORDERS_ANALYTICS_STREAM
+        GROUP BY SUMMARY_DATE
+    ) src
+    ON tgt.SUMMARY_DATE = src.SUMMARY_DATE
+    WHEN MATCHED THEN UPDATE SET
+        tgt.TOTAL_ORDERS    = tgt.TOTAL_ORDERS + src.NEW_ORDERS,
+        tgt.TOTAL_REVENUE   = tgt.TOTAL_REVENUE + src.NEW_REVENUE,
+        tgt.AVG_ORDER_VALUE = ROUND((tgt.TOTAL_REVENUE + src.NEW_REVENUE)
+                              / (tgt.TOTAL_ORDERS + src.NEW_ORDERS), 2),
+        tgt.LAST_UPDATED    = CURRENT_TIMESTAMP()
+    WHEN NOT MATCHED THEN INSERT (SUMMARY_DATE, TOTAL_ORDERS, TOTAL_REVENUE, AVG_ORDER_VALUE)
+        VALUES (src.SUMMARY_DATE, src.NEW_ORDERS, src.NEW_REVENUE, ROUND(src.NEW_AVG, 2));
+
+-- Resume the task so it starts running
+ALTER TASK REFRESH_ORDER_SUMMARY RESUME;
+
+-- Verify
+SHOW STREAMS IN SCHEMA ANALYTICS;
+SHOW TASKS IN SCHEMA ANALYTICS;

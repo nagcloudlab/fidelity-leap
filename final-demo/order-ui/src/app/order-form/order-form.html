@@ -1,0 +1,89 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card-elevated p-5">
+        <div class="text-center mb-4">
+          <div class="form-icon gradient-bg mb-3">
+            <i class="fa fa-shopping-bag fa-lg text-white"></i>
+          </div>
+          <h3 class="fw-bold">Place an Order</h3>
+          <p class="text-muted">Fill in the details below</p>
+        </div>
+
+        @if (errorMessage()) {
+          <div class="alert alert-danger d-flex align-items-center py-2">
+            <i class="fa fa-exclamation-circle me-2"></i>{{ errorMessage() }}
+          </div>
+        }
+
+        @if (successMessage()) {
+          <div class="alert alert-success d-flex align-items-center py-2">
+            <i class="fa fa-check-circle me-2"></i>{{ successMessage() }}
+            <button class="btn btn-sm btn-outline-success ms-auto" (click)="viewOrders()">
+              View Orders
+            </button>
+          </div>
+        }
+
+        <form (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label class="form-label fw-semibold">
+              <i class="fa fa-user me-1 text-muted"></i>Customer Name
+            </label>
+            <input type="text" class="form-control form-control-lg"
+                   placeholder="Enter your name"
+                   [(ngModel)]="customerName" name="customerName" />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">
+              <i class="fa fa-envelope me-1 text-muted"></i>Email
+            </label>
+            <input type="email" class="form-control form-control-lg"
+                   placeholder="you@example.com"
+                   [(ngModel)]="customerEmail" name="customerEmail" />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">
+              <i class="fa fa-cube me-1 text-muted"></i>Product
+            </label>
+            <select class="form-control form-control-lg"
+                    [(ngModel)]="selectedProductId" name="selectedProductId">
+              <option [value]="0" disabled>Select a product</option>
+              @for (product of products(); track product.id) {
+                <option [value]="product.id">
+                  {{ product.name }} - ${{ product.price.toFixed(2) }}
+                </option>
+              }
+            </select>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label fw-semibold">
+              <i class="fa fa-sort-numeric-asc me-1 text-muted"></i>Quantity
+            </label>
+            <input type="number" class="form-control form-control-lg"
+                   min="1" max="100"
+                   [(ngModel)]="quantity" name="quantity" />
+          </div>
+
+          @if (getSelectedProduct()) {
+            <div class="alert alert-info py-2 mb-4">
+              <i class="fa fa-info-circle me-1"></i>
+              Order total: <strong>${{ getTotal().toFixed(2) }}</strong>
+            </div>
+          }
+
+          <button type="submit" class="btn btn-gradient w-100 btn-lg" [disabled]="loading()">
+            @if (loading()) {
+              <span class="spinner-border spinner-border-sm me-2"></span>Placing order...
+            } @else {
+              <i class="fa fa-check me-2"></i>Place Order
+            }
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

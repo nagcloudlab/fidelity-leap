@@ -1,0 +1,49 @@
+<div class="container py-5">
+  <div class="text-center mb-5">
+    <h2 class="fw-bold">Product Catalog</h2>
+    <p class="text-muted">Browse our products and place an order</p>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="alert alert-danger d-flex align-items-center py-2">
+      <i class="fa fa-exclamation-circle me-2"></i>{{ errorMessage() }}
+    </div>
+  }
+
+  @if (loading()) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="text-muted mt-3">Loading products...</p>
+    </div>
+  } @else {
+    <div class="row g-4">
+      @for (product of products(); track product.id) {
+        <div class="col-md-4">
+          <div class="card-elevated p-4 h-100 d-flex flex-column">
+            <div class="d-flex align-items-center mb-3">
+              <div class="product-icon me-3">
+                <i class="fa {{ getCategoryIcon(product.category) }} fa-lg"></i>
+              </div>
+              <div>
+                <h5 class="fw-bold mb-0">{{ product.name }}</h5>
+                <small class="text-muted">{{ product.brand }}</small>
+              </div>
+            </div>
+            <p class="text-secondary flex-grow-1">{{ product.description }}</p>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <div>
+                <span class="badge bg-light text-dark me-1">{{ product.category }}</span>
+                <span class="h5 fw-bold text-primary mb-0">${{ product.price.toFixed(2) }}</span>
+              </div>
+              <button class="btn btn-gradient btn-sm" (click)="orderProduct(product.id)">
+                <i class="fa fa-shopping-cart me-1"></i>Order
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

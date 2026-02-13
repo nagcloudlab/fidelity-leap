@@ -1,0 +1,133 @@
+<div class="container py-5">
+  <div class="text-center mb-5">
+    <h2 class="fw-bold"><i class="fa fa-bar-chart me-2"></i>Analytics Dashboard</h2>
+    <p class="text-muted">Real-time order analytics from Snowflake (OLAP)</p>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="alert alert-warning d-flex align-items-center py-2">
+      <i class="fa fa-exclamation-triangle me-2"></i>{{ errorMessage() }}
+      <br>
+      <small class="text-muted">Make sure the analytics-service (port 8083) is running and Snowflake is connected.</small>
+    </div>
+  }
+
+  @if (loading()) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="text-muted mt-3">Loading analytics from Snowflake...</p>
+    </div>
+  } @else {
+    <!-- Daily Summary -->
+    <div class="card-elevated p-4 mb-4">
+      <h5 class="fw-bold mb-3">
+        <i class="fa fa-calendar me-2 text-primary"></i>Daily Order Summary
+      </h5>
+      @if (summary().length === 0) {
+        <p class="text-muted text-center py-3">No data yet. Place some orders to see analytics.</p>
+      } @else {
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Date</th>
+                <th>Orders</th>
+                <th>Revenue</th>
+                <th>Avg Value</th>
+                <th>Items</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (row of summary(); track row.orderDay) {
+                <tr>
+                  <td>{{ formatDate(row.orderDay) }}</td>
+                  <td>{{ row.totalOrders }}</td>
+                  <td class="fw-bold">${{ row.totalRevenue.toFixed(2) }}</td>
+                  <td>${{ row.avgOrderValue.toFixed(2) }}</td>
+                  <td>{{ row.totalItems }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </div>
+
+    <!-- Top Products -->
+    <div class="card-elevated p-4 mb-4">
+      <h5 class="fw-bold mb-3">
+        <i class="fa fa-trophy me-2 text-warning"></i>Top Products
+      </h5>
+      @if (topProducts().length === 0) {
+        <p class="text-muted text-center py-3">No product data yet.</p>
+      } @else {
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Product</th>
+                <th>Times Ordered</th>
+                <th>Units Sold</th>
+                <th>Revenue</th>
+                <th>Avg Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (product of topProducts(); track product.productName) {
+                <tr>
+                  <td class="fw-semibold">{{ product.productName }}</td>
+                  <td>{{ product.timesOrdered }}</td>
+                  <td>{{ product.totalUnitsSold }}</td>
+                  <td class="fw-bold">${{ product.totalRevenue.toFixed(2) }}</td>
+                  <td>${{ product.avgUnitPrice.toFixed(2) }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </div>
+
+    <!-- Recent Orders from Snowflake -->
+    <div class="card-elevated p-4">
+      <h5 class="fw-bold mb-3">
+        <i class="fa fa-snowflake-o me-2 text-info"></i>Recent Orders (from Snowflake)
+      </h5>
+      @if (recentOrders().length === 0) {
+        <p class="text-muted text-center py-3">No orders in Snowflake yet.</p>
+      } @else {
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Total</th>
+                <th>Items</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (order of recentOrders(); track order.orderId) {
+                <tr>
+                  <td class="fw-semibold">#{{ order.orderId }}</td>
+                  <td>
+                    <div>{{ order.customerName }}</div>
+                    <small class="text-muted">{{ order.customerEmail }}</small>
+                  </td>
+                  <td>{{ formatDate(order.orderDate) }}</td>
+                  <td><span class="badge bg-success">{{ order.status }}</span></td>
+                  <td class="fw-bold">${{ order.totalAmount.toFixed(2) }}</td>
+                  <td>{{ order.itemCount }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </div>
+  }
+</div>
